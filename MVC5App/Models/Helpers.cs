@@ -12,14 +12,14 @@ namespace MVC5App.Models
         {
             var appConfig = ConfigurationManager.AppSettings;
 
-            string dbname = appConfig["ebdb"];
+            string dbname = appConfig["RDS_DB_NAME"];
 
             if (string.IsNullOrEmpty(dbname)) return null;
 
-            string username = appConfig["bossdb"];
-            string password = appConfig["waffles.191"];
-            string hostname = appConfig["aaoiljp2hsri1p.coagiw8yxfuv.us-west-1.rds.amazonaws.com"];
-            string port = appConfig["3306"];
+            string username = appConfig["RDS_USERNAME"];
+            string password = appConfig["RDS_PASSWORD"];
+            string hostname = appConfig["RDS_HOSTNAME"];
+            string port = appConfig["RDS_PORT"];
 
             return "Data Source=" + hostname + ";Initial Catalog=" + dbname + ";User ID=" + username + ";Password=" + password + ";";
         }
