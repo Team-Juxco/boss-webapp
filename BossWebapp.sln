@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC5App", "MVC5App\MVC5App.csproj", "{B9A5209D-5A8A-455A-B9BD-37C8F8F98A93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOSSMVC5", "MVC5App\BOSSMVC5.csproj", "{B9A5209D-5A8A-455A-B9BD-37C8F8F98A93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC5App.Tests", "MVC5App.Tests\MVC5App.Tests.csproj", "{BE54244E-28BC-4DA8-B296-4DF8F910D75F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOSSMVC5.Tests", "MVC5App.Tests\BOSSMVC5.Tests.csproj", "{BE54244E-28BC-4DA8-B296-4DF8F910D75F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2DC24F08-60CF-4FFA-9540-1F211EA6487B}
 	EndGlobalSection
 EndGlobal

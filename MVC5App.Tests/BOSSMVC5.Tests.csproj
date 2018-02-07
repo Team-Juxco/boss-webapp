@@ -92,9 +92,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MVC5App\MVC5App.csproj">
+    <ProjectReference Include="..\MVC5App\BOSSMVC5.csproj">
       <Project>{B9A5209D-5A8A-455A-B9BD-37C8F8F98A93}</Project>
-      <Name>MVC5App</Name>
+      <Name>BOSSMVC5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
