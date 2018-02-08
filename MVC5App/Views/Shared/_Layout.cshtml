@@ -33,8 +33,8 @@
         <hr />
         <footer>
             <p style="color:green">  
-            @if (!string.IsNullOrEmpty(MVC5App.Models.Helpers.RDS_DB_NAME))
-                {<i>Connected to RDS Database: @MVC5App.Models.Helpers.RDS_DB_NAME</i>}
+            @if (!string.IsNullOrEmpty(System.Configuration.ConfigurationManager.AppSettings["RDS_DB_NAME"]))
+                {<i>Connected to RDS Database: @System.Configuration.ConfigurationManager.AppSettings["RDS_DB_NAME"]</i>}
             </p>
             <p>&copy; @DateTime.Now.Year - Team Juxco - CSc 191-01</p>
         </footer>
