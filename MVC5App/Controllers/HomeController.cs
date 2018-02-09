@@ -1,4 +1,5 @@
 ﻿using MVC5App.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,13 @@ namespace MVC5App.Controllers
     {
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult Fuel()
+        {
+            ViewBag.Message = "Your fuel page.";
+
             return View();
         }
 

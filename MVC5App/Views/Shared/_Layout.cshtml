@@ -19,29 +19,103 @@
                 </button>
                 @Html.ActionLink("BOSS - Back Office Sales System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <!--<div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <!--<li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>-->
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")
                 </ul>
-            </div>
+            </div></li>-->
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="margin-top: 20px; border: 1px solid #1c1e22;">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                @Html.ActionLink("Dashboard", "Index", "Home")
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Fuel", "Fuel", "Home")
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="shopping-cart"></span>
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="users"></span>
+                                    Customers
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="bar-chart-2"></span>
+                                    Reports
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="layers"></span>
+                                    Integrations
+                                </a>
+                            </li>
+                        </ul>
+
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Saved reports</span>
+                            <a class="d-flex align-items-center text-muted" href="#">
+                                <span data-feather="plus-circle"></span>
+                            </a>
+                        </h6>
+                        <ul class="nav flex-column mb-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file-text"></span>
+                                    Current month
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file-text"></span>
+                                    Last quarter
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file-text"></span>
+                                    Social engagement
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file-text"></span>
+                                    Year-end sale
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                @RenderBody()
+
+            </div>
+        </div>
         <hr />
         <footer>
-            <p style="color:green">  
-            @if (!string.IsNullOrEmpty(System.Configuration.ConfigurationManager.AppSettings["RDS_DB_NAME"]))
+            <p style="color:green">
+                @if (!string.IsNullOrEmpty(System.Configuration.ConfigurationManager.AppSettings["RDS_DB_NAME"]))
                 {<i>Connected to RDS Database: @System.Configuration.ConfigurationManager.AppSettings["RDS_DB_NAME"]</i>}
             </p>
             <p>&copy; @DateTime.Now.Year - Team Juxco - CSc 191-01</p>
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)
 </body>
 </html>
