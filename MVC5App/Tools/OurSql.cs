@@ -17,6 +17,15 @@ namespace Tools
             // automatically open the sql connection
             sql = new MySqlConnection(connectionString);
             sql.Open();
+
+            // match sql timezone
+            var utcOffset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = sql;
+            cmd.CommandText = "SET time_zone = '" + utcOffset.TotalHours + ":" + utcOffset.Minutes + "'";
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+
         }
 
         public MySqlDataReader Query(string query)
@@ -26,29 +35,26 @@ namespace Tools
             return cmd.ExecuteReader();
         }
 
-        public void Command(string tableAndColumns, string[] values)
+        public void Replace(string tableName, Dictionary<string, string> values)
         {
             // wrap parameterized non-queries
 
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = sql;
 
-            // build up command text according to the number of values passed in as an array
-            string commandText = "INSERT INTO " + tableAndColumns + " VALUES(";
-            for (int i = 0; i < values.Length; i++)
-            {
-                commandText += "@" + i;
-                if (i != (values.Length - 1)) { commandText += ", "; }
-            }
-            commandText += ")";
-            cmd.CommandText = commandText;
+            // build up replace command string
+            string keyString = string.Join(", ", values.Select(x => x.Key).ToArray());
+            string valueString = string.Join(", ", values.Select(x => "@" + x.Key).ToArray());
+            string updateString = string.Join(", ", values.Select(x => x.Key + "=@" + x.Key));
+            cmd.CommandText = "INSERT INTO " + tableName + " (" + keyString + ") VALUES(" + valueString + ") " +
+            "ON DUPLICATE KEY UPDATE " + updateString + ";";
 
             cmd.Prepare();
 
             // add parameters according to passed in values
-            for (int i = 0; i < values.Length; i++)
+            foreach (var key in values.Keys)
             {
-                cmd.Parameters.AddWithValue("@" + i, values[i]);
+                cmd.Parameters.AddWithValue("@" + key, values[key]);
             }
 
             // execute

@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
@@ -49,4 +48,48 @@ textarea {
 .blocktext img{
     width:70%;
     height:70%;
+}
+
+.forminput,
+.formsubmit,
+.input-validation-error {
+    background-color: transparent;
+    border: 0px;
+    border-bottom: dotted beige;
+    color: beige;
+    outline: none;
+}
+
+.formsubmit {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    font: inherit;
+}
+
+.formsubmit:hover {
+    color: white;
+}
+
+.input-validation-error {
+    border-bottom: dotted red;
+    color: #FFEDED;
+}
+
+.top-margin {
+    margin-top: 2em;
+}
+
+@media (min-width: 992px) {
+    .left-half {
+        width: 49%;
+        float: left;
+        display: inline-block;
+    }
+
+    .right-half {
+        width: 49%;
+        float: right;
+        display: inline-block;
+    }
 }

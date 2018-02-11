@@ -1,0 +1,53 @@
+﻿
+@helper FillChart(System.Web.Mvc.HtmlHelper html, string chartId, string[] chartLabels, string[] chartValues, string[] tooltipLabels=null)
+{
+    <script>
+        var ctx = document.getElementById('@chartId');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [@html.Raw(string.Join(", ", chartLabels.Select(x => "'" + x + "'")))],
+                tooltipLabels: [@html.Raw(string.Join(", ", tooltipLabels.Select(x => "'" + x + "'")))],
+                datasets: [{
+                    data: [@string.Join(", ", chartValues)],
+                    lineTension: 0,
+                    backgroundColor: 'transparent',
+                    borderColor: '#007bff',
+                    borderWidth: 4,
+                    pointBackgroundColor: '#007bff'
+                }]
+            },
+            options: {
+                layout: {
+                    padding: {
+                        left: 2.75
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            maxRotation: 90,
+                            minRotation: 90
+                        }
+                    }]
+                },
+                legend: {
+                    display: false,
+                },
+                tooltips: {
+                    callbacks: {
+                        title: function (tooltipItems, data) {
+                            if (this._data.tooltipLabels.length == 0) { return data.datasets[tooltipItems[0].index].title; }
+                            return this._data.tooltipLabels[tooltipItems[0].index];
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

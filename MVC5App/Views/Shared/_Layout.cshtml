@@ -6,10 +6,11 @@
     <title>@ViewBag.Title | BOSS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @Scripts.Render("~/Scripts/boss.js")
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js")
 </head>
 <body>
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-fixed">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -38,7 +39,13 @@
                                 @Html.ActionLink("Dashboard", "Index", "Home")
                             </li>
                             <li class="nav-item">
-                                @Html.ActionLink("Fuel", "Fuel", "Home")
+                                @* 
+                                    I would like to use the following:
+                                    @Html.ActionLink("Fuel Inventory", "FuelInventory", "Home", null, null)
+                                    However, clicking this link from the month view brings me back to the same month
+                                    instead of the fuel inventory dashboard.
+                                *@
+                                <a href="@Url.Content("~/Home/FuelInventory/")">Fuel Inventory</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
@@ -116,6 +123,7 @@
 
             @Scripts.Render("~/bundles/jquery")
             @Scripts.Render("~/bundles/bootstrap")
+            @Scripts.Render("~/bundles/jqueryval")
             @RenderSection("scripts", required: false)
 </body>
 </html>
