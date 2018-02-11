@@ -60,11 +60,8 @@ textarea {
     outline: none;
 }
 
-.formsubmit {
-    background: none !important;
-    border: none;
-    padding: 0 !important;
-    font: inherit;
+.forminput {
+    width: 60px;
 }
 
 .formsubmit:hover {
@@ -80,7 +77,19 @@ textarea {
     margin-top: 2em;
 }
 
-@media (min-width: 992px) {
+.navbar-button {
+    position: absolute;
+    right: 0;
+    height: 32px;
+    width: 32px;
+    margin: 8px;
+    border: 0;
+    background-color: transparent;
+    background: url("/Content/menu.png") no-repeat top left;
+    cursor: pointer;
+}
+
+@media (min-width: 667px) {
     .left-half {
         width: 49%;
         float: left;
@@ -91,5 +100,39 @@ textarea {
         width: 49%;
         float: right;
         display: inline-block;
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar-button {
+        display: none;
+    }
+
+    .sidebar {
+        display: block;
+    }
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 350px) {
+    .navbar-brand {
+        visibility: hidden;
+    }
+
+    .navbar-brand:after {
+        content: 'BOSS';
+        visibility: visible;
+        display: block;
+        position: absolute;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 15px;
+        top: 0px;
+        left: 0;
     }
 }

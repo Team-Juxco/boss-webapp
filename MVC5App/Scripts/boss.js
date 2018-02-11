@@ -18,3 +18,12 @@ function alter(key, value) {
     valueInput.select();
     lastAlter = key;
 }
+
+function toggleSidebar() {
+    var sidebar = document.getElementsByClassName("sidebar")[0];
+    if (sidebar.style.display === "none") {
+        sidebar.style.display = "block";
+    } else {
+        sidebar.style.display = "none";
+    }
+}

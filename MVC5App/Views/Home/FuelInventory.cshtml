@@ -130,7 +130,7 @@
                             var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                             <tr>
                                 @* display the key (date) and create a link to a month view *@
-                                <td><a href="@item.Key.ToString("yyyy-MM")">@key</a></td>
+                                <td><a href="~/Home/FuelInventory/@item.Key.ToString("yyyy-MM")">@key</a></td>
                                 @* display the value (fuel amount) *@
                                 <td>@string.Format("{0:F5}", value)</td>
                             </tr>
