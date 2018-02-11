@@ -19,10 +19,12 @@ namespace Tools
             sql.Open();
 
             // match sql timezone
+            // TODO: allow the website to set the time zone?
             var utcOffset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = sql;
-            cmd.CommandText = "SET time_zone = '" + utcOffset.TotalHours + ":" + utcOffset.Minutes + "'";
+            var prefix = (utcOffset.TotalHours >= 0) ? "+" : "";
+            cmd.CommandText = "SET time_zone = '" + prefix + utcOffset.TotalHours + ":" + utcOffset.Minutes + "'";
             cmd.Prepare();
             cmd.ExecuteNonQuery();
 
