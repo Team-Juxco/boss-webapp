@@ -65,7 +65,7 @@
                     foreach (var item in monthInventory)
                     {
                         var key = item.Key.ToString("MMMM d, yyyy");  // <--- Key for alterable
-                        var value = item.Value;  // <--- Value for alterable
+                        var value = string.Format("{0:F5}", item.Value);  // <--- Value for alterable
                         var actionName = this.ViewContext.RouteData.Values["action"].ToString();
                         var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                         <tr>
