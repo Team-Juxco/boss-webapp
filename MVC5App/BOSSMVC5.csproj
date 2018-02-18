@@ -163,9 +163,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FuelInventoryController.cs" />
+    <Compile Include="Controllers\FuelSalesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Models\InventoryModels.cs" />
+    <Compile Include="Models\SaleModels.cs" />
     <Compile Include="Tools\DateHelper.cs" />
     <Compile Include="Tools\OurSql.cs" />
     <Compile Include="Global.asax.cs">
@@ -246,9 +248,12 @@
     <Content Include="Views\FuelInventory\FuelInventory.cshtml" />
     <Content Include="App_Code\Helpers.cshtml" />
     <Content Include="Views\FuelInventory\FuelInventoryMonth.cshtml" />
+    <Content Include="Views\FuelSales\FuelSales.cshtml" />
+    <Content Include="Views\FuelSales\FuelSalesMonth.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="MVC5App\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
