@@ -73,7 +73,7 @@
                             <td>@key</td>
                             <td>
                                 @* allow the value (fuel amount) to be altered *@
-                                <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">@value</a>
+                                <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">@value gallons</a>
                                 @using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { @id = @key + "-alter", @style = "display:none" }))
                                 {
                                     @Html.TextBoxFor(m => m.FuelAmount, // <--- Value here

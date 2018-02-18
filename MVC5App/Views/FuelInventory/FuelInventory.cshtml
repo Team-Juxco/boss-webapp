@@ -121,7 +121,7 @@
                                 <td>@key</td>
                                 <td>
                                     @* allow the value (fuel amount) to be altered *@
-                                    <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">@value</a>
+                                    <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">@value gallons</a>
                                     @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-alter", @style = "display:none" }))
                                     {
                                         @Html.TextBoxFor(m => m.FuelAmount, // <--- Value for alterable
@@ -169,7 +169,7 @@
                                 @* display the key (date) and create a link to a month view *@
                                 <td><a href="@item.Key.ToString("yyyy-MM")">@key</a></td>
                                 @* display the value (fuel amount) *@
-                                <td>@string.Format("{0:F5}", value)</td>
+                                <td>@string.Format("{0:F5}", value) gallons</td>
                             </tr>
                         }
                     }
