@@ -37,7 +37,7 @@ namespace MVC5App.Controllers
                         { "OnDate", model.OnDate.ToString("yyyy-MM-dd") },
                         { "FuelAmount", model.FuelAmount.ToString() }
                     };
-                        sql.Replace("FuelInventory", values);
+                        sql.Replace("FuelInventory" + tank, values);
                     }
                 }
                 else

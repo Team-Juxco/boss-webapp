@@ -25,7 +25,7 @@
     {
         // query fuel inventory and populate dictionary
         var rdr = sql.Query("SELECT OnDate, FuelAmount " +
-                            "FROM FuelInventory " +
+                            "FROM FuelInventory" + ViewData["tank"] + " " +
                             "WHERE OnDate > Subdate(Curdate(), INTERVAL 12 DAY) " +
                             "AND OnDate <= Curdate()");
         while (rdr.Read())
@@ -37,7 +37,7 @@
         // query fuel inventory and populate dictionary
         rdr.Close();
         rdr = sql.Query("SELECT YEAR(OnDate), MONTH(OnDate), AVG(FuelAmount) " +
-                            "FROM FuelInventory " +
+                            "FROM FuelInventory" + ViewData["tank"] + " " +
                             "WHERE OnDate > Subdate(Curdate(), INTERVAL 1 YEAR) " +
                             "AND OnDate <= Curdate() " +
                             "GROUP BY YEAR(OnDate), MONTH(OnDate)");
@@ -122,7 +122,7 @@
                                 <td>
                                     @* allow the value (fuel amount) to be altered *@
                                     <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">@value</a>
-                                    @using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { @id = @key + "-alter", @style = "display:none" }))
+                                    @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-alter", @style = "display:none" }))
                                     {
                                         @Html.TextBoxFor(m => m.FuelAmount, // <--- Value for alterable
                                                      new { @class = "forminput", @Value = @value })

@@ -24,7 +24,7 @@
     {
         // query fuel inventory and populate dictionary
         var rdr = sql.Query("SELECT OnDate, FuelAmount " +
-                            "FROM FuelInventory " +
+                            "FROM FuelInventory" + ViewData["tank"] + " " +
                             "WHERE YEAR(OnDate)=" + yearMonth.Year + " " +
                             "AND MONTH(OnDate)=" + yearMonth.Month);
         while (rdr.Read())
@@ -39,7 +39,7 @@
         }
     }
 }
-<h1 class="col-md-9">Fuel Inventory</h1>
+<h1 class="col-md-9">Fuel Inventory @ViewData["tank"]</h1>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
