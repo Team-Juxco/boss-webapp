@@ -1,6 +1,6 @@
 ﻿@model MVC5App.Models.FuelInventoryViewModel
 @{
-    ViewBag.Title = "Fuel Inventory";
+    ViewBag.Title = "Fuel Inventory " + ViewData["tank"];
 
     // build up a sorted dictionary with a default value of 0
     // we need to do this step in order to account for entries that do not exist in the database
@@ -49,9 +49,46 @@
         }
     }
 }
-<h1 class="col-md-9">Fuel Inventory</h1>
+<h1 class="col-md-9">Fuel Inventory @ViewData["tank"]</h1>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+    <div>
+        <div style="float: left">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    @{
+                        if (ViewData["tank"].ToString() == "A")
+                        {
+                            <a class="nav-current" href="@Url.Content("../A/")">Tank A</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Content("../A/")">Tank A</a>
+                        }
+                    }
+                </li>
+            </ul>
+        </div>
+        <div style="float:left">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    @{
+                        if (ViewData["tank"].ToString() == "B")
+                        {
+                            <a class="nav-current" href="@Url.Content("../B/")">Tank B</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Content("../B/")">Tank B</a>
+                        }
+                    }
+                </li>
+            </ul>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+
     <div class="left-half">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h2>Recent</h2>
@@ -130,7 +167,7 @@
                             var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                             <tr>
                                 @* display the key (date) and create a link to a month view *@
-                                <td><a href="~/Home/FuelInventory/@item.Key.ToString("yyyy-MM")">@key</a></td>
+                                <td><a href="@item.Key.ToString("yyyy-MM")">@key</a></td>
                                 @* display the value (fuel amount) *@
                                 <td>@string.Format("{0:F5}", value)</td>
                             </tr>

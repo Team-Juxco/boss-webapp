@@ -1,6 +1,7 @@
 ﻿@model MVC5App.Models.FuelInventoryViewModel
+
 @{
-    ViewBag.Title = "Fuel Inventory Month";
+    ViewBag.Title = "Fuel Inventory " + ViewData["tank"] + " Month";
 
     // build up a sorted dictionary with a default value of 0
     // we need to do this step in order to account for entries that do not exist in the database
@@ -63,8 +64,8 @@
                     // allow the values to be altered by clicking them
                     foreach (var item in monthInventory)
                     {
-                        var key = item.Key.ToString("MMMM d, yyyy");  // <-- Key for alterable
-                        var value = item.Value;  // <-- Value for alterable
+                        var key = item.Key.ToString("MMMM d, yyyy");  // <--- Key for alterable
+                        var value = item.Value;  // <--- Value for alterable
                         var actionName = this.ViewContext.RouteData.Values["action"].ToString();
                         var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                         <tr>
