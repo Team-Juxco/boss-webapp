@@ -1,6 +1,7 @@
 ﻿@model MVC5App.Models.FuelInventoryViewModel
+
 @{
-    ViewBag.Title = "Fuel Inventory Month";
+    ViewBag.Title = "Fuel Inventory " + ViewData["tank"] + " Month";
 
     // build up a sorted dictionary with a default value of 0
     // we need to do this step in order to account for entries that do not exist in the database
@@ -23,7 +24,7 @@
     {
         // query fuel inventory and populate dictionary
         var rdr = sql.Query("SELECT OnDate, FuelAmount " +
-                            "FROM FuelInventory " +
+                            "FROM FuelInventory" + ViewData["tank"] + " " +
                             "WHERE YEAR(OnDate)=" + yearMonth.Year + " " +
                             "AND MONTH(OnDate)=" + yearMonth.Month);
         while (rdr.Read())
@@ -38,7 +39,7 @@
         }
     }
 }
-<h1 class="col-md-9">Fuel Inventory</h1>
+<h1 class="col-md-9">Fuel Inventory @ViewData["tank"]</h1>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
@@ -63,8 +64,8 @@
                     // allow the values to be altered by clicking them
                     foreach (var item in monthInventory)
                     {
-                        var key = item.Key.ToString("MMMM d, yyyy");  // <-- Key for alterable
-                        var value = item.Value;  // <-- Value for alterable
+                        var key = item.Key.ToString("MMMM d, yyyy");  // <--- Key for alterable
+                        var value = item.Value;  // <--- Value for alterable
                         var actionName = this.ViewContext.RouteData.Values["action"].ToString();
                         var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                         <tr>
@@ -72,7 +73,7 @@
                             <td>@key</td>
                             <td>
                                 @* allow the value (fuel amount) to be altered *@
-                                <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">@value</a>
+                                <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">@value gallons</a>
                                 @using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { @id = @key + "-alter", @style = "display:none" }))
                                 {
                                     @Html.TextBoxFor(m => m.FuelAmount, // <--- Value here
