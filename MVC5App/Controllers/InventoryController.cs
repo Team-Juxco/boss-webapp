@@ -17,6 +17,38 @@ namespace MVC5App.Controllers
             return View();
         }
 
+        private void Insert(InventoryChangeViewModel model)
+        {
+            // insert a new value into the database
+            using (var sql = new Tools.OurSql())
+            {
+                var values = new Dictionary<string, string>
+                {
+                    { "Id", model.Id + "" },
+                    { "Category", model.Category + "" },
+                    { "Description", model.Description },
+                    { "Stock", model.Stock + "" }
+                };
+                sql.Insert("Inventory", values);
+            }
+        }
+
+        private void Update(InventoryChangeViewModel model)
+        {
+            // update values in to the databse
+            using (var sql = new Tools.OurSql())
+            {
+                var values = new Dictionary<string, string>
+                {
+                    { "Id", model.Id + "" },
+                    { "Category", model.Category + "" },
+                    { "Description", model.Description },
+                    { "Stock", model.Stock + "" }
+                };
+                sql.Update("Inventory", "Id", model.OriginalId + "", values);
+            }
+        }
+
         [HttpPost]
         public ActionResult Index(InventoryChangeViewModel model)
         {
@@ -27,17 +59,21 @@ namespace MVC5App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // parsing worked, apply the post values to the databse
-                    using (var sql = new Tools.OurSql())
+                    try
                     {
-                        var values = new Dictionary<string, string>
+                        if (model.OriginalId == -1)
                         {
-                            { "Id", model.Id + "" },
-                            { "Category", model.Category + "" },
-                            { "Description", model.Description },
-                            { "Stock", model.Stock + "" }
-                        };
-                        sql.Update("Inventory", "Id", model.OriginalId + "", values);
+                            Insert(model);
+                        }
+                        else
+                        {
+                            Update(model);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewData["error"] = ex.Message;
+                        return View("Error");
                     }
 
                     ViewData["category"] = Request["ViewingCategory"];
@@ -45,7 +81,7 @@ namespace MVC5App.Controllers
                 else
                 {
                     // parsing failed, throw up an error message
-                    string errorMessage = "Error:<br>";
+                    string errorMessage = "";
                     foreach (var val in ModelState.Values)
                     {
                         foreach (var err in val.Errors)
@@ -53,7 +89,9 @@ namespace MVC5App.Controllers
                             errorMessage += err.ErrorMessage + "<br>";
                         }
                     }
-                    return Content(errorMessage);
+
+                    ViewData["error"] = errorMessage;
+                    return View("Error");
                 }
             }
 

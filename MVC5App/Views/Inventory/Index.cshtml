@@ -49,6 +49,9 @@
         Value = f.Key + "",
         Text = f.Value
     });
+
+    var actionName = this.ViewContext.RouteData.Values["action"].ToString();
+    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
 }
 
 <h1 class="col-md-9">Inventory</h1>
@@ -105,8 +108,6 @@
                     foreach (var item in inventory.Values)
                     {
                         var key = item.Id;
-                        var actionName = this.ViewContext.RouteData.Values["action"].ToString();
-                        var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                         <tr>
                             <td>
                                 <a onclick="alter('@key', '@item.Id', 'id')" href="#edit" id="@key-id-display">@item.Id</a>
@@ -138,7 +139,7 @@
                                 <a onclick="alter('@key', '@item.Description', 'description')" href="#edit" id="@key-description-display">@item.Description</a>
                                 @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-description-alter", @style = "display:none" }))
                                 {
-                                    @Html.TextBoxFor(m => m.Description, new { @class = "forminput", @Value = @item.Description, @style="width:70%" })
+                                    @Html.TextBoxFor(m => m.Description, new { @class = "forminput", @Value = @item.Description, @style = "width:70%" })
                                     @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
                                     @Html.TextBoxFor(m => m.Id, new { @style = "display:none", @Value = @key })
                                     @Html.TextBoxFor(m => m.Category, new { @style = "display:none", @Value = @item.Category })
@@ -162,8 +163,36 @@
                             </td>
                         </tr>
                     }
+                    using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post))
+                    {
+                        <tr class="insert-alter" style="display:none">
+                            <td>
+                                @Html.TextBoxFor(m => m.Id, new { @class = "forminput", @style = "width:100%" })
+                                @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = "-1" })
+                                @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
+                            </td>
+                            <td>@Html.DropDownListFor(m => m.Category, categoryItems, new { @class = "forminput", @style = "width:100%" })</td>
+                            <td>@Html.TextBoxFor(m => m.Description, new { @class = "forminput", @style = "width:100%" })</td>
+                            <td>@Html.TextBoxFor(m => m.Stock, new { @class = "forminput", @style = "width:100%" })</td>
+                        </tr>
+                        <tr class="insert-alter" style="display:none">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><input class="forminput formsubmit" type="submit" value="Save" style="float:right" /></td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
+
+        <div style="float: right">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a id="insert-button" href="#insert" onclick="alterInsert()">Insert</a>
+                </li>
+            </ul>
+        </div>
+
     </div>
 </main>
