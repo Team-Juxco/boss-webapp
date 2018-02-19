@@ -43,4 +43,27 @@ namespace MVC5App.Models
         [Required]
         public int Stock { get; set; }
     }
+
+    public class InventoryChangeViewModel
+    {
+        [Required]
+        public int OriginalId { get; set; }
+
+        [Required]
+        public int Id { get; set; }
+
+        [Required]
+        public int Category { get; set; }
+
+        [Required]
+        [MaxLength(45, ErrorMessage = "Description cannot be longer than 45 characters.")]
+        [DataType(DataType.Text)]
+        public string Description { get; set; }
+
+        [Required]
+        public int Stock { get; set; }
+
+        [Required]
+        public int ViewingCategory { get; set; }
+    }
 }

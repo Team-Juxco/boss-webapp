@@ -65,6 +65,32 @@ namespace Tools
             // TODO: add logging here
         }
 
+        public void Update(string tableName, string keyName, string keyValue, Dictionary<string, string> values)
+        {
+            // wrap parameterized non-queries
+
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = sql;
+
+            // build up update command string
+            string keyString = string.Join(", ", values.Select(x => x.Key + " = @" + x.Key).ToArray());
+            cmd.CommandText = "UPDATE " + tableName + " " +
+                              "SET " + keyString + " " +
+                              "WHERE " + keyName + " = " + keyValue;
+            cmd.Prepare();
+
+            // add parameters according to passed in values
+            foreach (var key in values.Keys)
+            {
+                cmd.Parameters.AddWithValue("@" + key, values[key]);
+            }
+
+            // execute
+            cmd.ExecuteNonQuery();
+
+            // TODO: add logging here
+        }
+
         public void Dispose()
         {
             sql.Close();
