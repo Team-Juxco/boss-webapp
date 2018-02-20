@@ -10,7 +10,7 @@
 	using System;
 
 	[TestClass]
-	public class ChucksClass1
+	public class TestUnitTest
 	{
 		private string baseURL = "http://teamjuxcoboss-env.us-west-1.elasticbeanstalk.com/";
 		private RemoteWebDriver driver;
@@ -28,7 +28,7 @@
 			driver.Manage().Window.Maximize();
 			driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(30));
 			driver.Navigate().GoToUrl(this.baseURL);
-			driver.FindElementByLinkText("Dashboard");
+			driver.FindElementByLinkText("Dashboard").Click();
 			//driver.FindElementById("search - box").Clear();
 			//driver.FindElementById("search - box").SendKeys("tire");
 			//do other Selenium things here!
