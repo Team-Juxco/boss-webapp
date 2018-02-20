@@ -37,6 +37,7 @@ namespace BOSSMVC5.Tests
 		{
 			driver = new ChromeDriver();
 			driver.Navigate().GoToUrl(URL);
+			driver.Manage().Window.Maximize(); // TODO: Testing for mobile TBD
 			return driver;
 		}
 
