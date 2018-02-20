@@ -39,5 +39,13 @@ namespace BOSSMVC5.Tests
             driver.Keyboard.SendKeys("1.00");
             driver.FindElementByName("Save").Click();
         }
+
+        [TestMethod]
+        public void DashboardLink()
+        {
+            RemoteWebDriver driver = StartBrowser();
+            driver.FindElementByLinkText("Fuel Inventory").Click();
+
+        }
     }
 }
