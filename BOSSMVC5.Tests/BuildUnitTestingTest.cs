@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Chrome;
 
 namespace BOSSMVC5.Tests
 {
@@ -11,13 +10,15 @@ namespace BOSSMVC5.Tests
 	[TestClass]
 	public class BuildUnitTestingTest
 	{
+		/// <summary>
+		/// Instantiates a TestHelper object, grabs a chrome driver, and then opens the dashboard.
+		/// </summary>
         [TestMethod]
 		public void OpenDashboard()
 		{
 			TestHelper th = new TestHelper("http://teamjuxcoboss-env.us-west-1.elasticbeanstalk.com/");
 			RemoteWebDriver chromeDriver = th.GetChromeDriver();
-			chromeDriver.Navigate().GoToUrl(th.GetURL());
-			chromeDriver.Quit();
+			th.QuitDriver();
 		}
     }
 }

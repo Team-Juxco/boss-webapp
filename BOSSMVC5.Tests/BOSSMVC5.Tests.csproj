@@ -66,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FuelInventoryTest.cs" />
     <Compile Include="TestHelper.cs" />
+    <Compile Include="MainNavigationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

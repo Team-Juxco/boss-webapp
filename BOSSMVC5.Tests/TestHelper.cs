@@ -3,6 +3,10 @@ using OpenQA.Selenium.Remote;
 
 namespace BOSSMVC5.Tests
 {
+	/// <summary>
+	/// Wrapper class for all Selenium-based tests. 
+	/// Helps abstract the implenetation of the RemoteWebDriver, as well as querying the database.
+	/// </summary>
 	class TestHelper
 	{
 
@@ -13,8 +17,10 @@ namespace BOSSMVC5.Tests
 		public string GetURL() { return URL; }
 		public void SetURL(string URL) { this.URL = URL; }
 
+		private RemoteWebDriver driver;
+
 		/// <summary>
-		/// Create a new TestHelper object to drive the Selenium testing with reduced redundancy 
+		/// Create a new TestHelper object to drive the Selenium testing with reduced redundancy.
 		/// </summary>
 		/// <param name="URL">The link to the page being tested for this object</param>
 		public TestHelper(string URL)
@@ -24,15 +30,30 @@ namespace BOSSMVC5.Tests
 
 		/// <summary>
 		/// Instantiates and returns a Chrome-based web driver to be used for Selenium testing.
-		/// Also, this function will open the page specified by this object's URL field
+		/// Also, this function will open the page specified by this object's URL field.
 		/// </summary>
 		/// <returns>RemoteWebDriver - the Chrome Driver to be used in Selenium testing</returns>
 		public RemoteWebDriver GetChromeDriver()
 		{
-			RemoteWebDriver driver;
 			driver = new ChromeDriver();
 			driver.Navigate().GoToUrl(URL);
 			return driver;
+		}
+
+		/// <summary>
+		/// Attempts to close and dispose the current driver. Returns false if unable to do so.
+		/// </summary>
+		/// <returns>bool - false if unable to close and/or dispose the current driver</returns>
+		public bool QuitDriver()
+		{
+			try
+			{
+				driver.Quit();
+				return true;
+			} catch(System.Exception)
+			{
+				return false;
+			}
 		}
 	}
 }
