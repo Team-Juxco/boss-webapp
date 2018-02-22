@@ -56,7 +56,7 @@ namespace BOSSMVC5.Tests
             //chromeDriver.FindElementByPartialLinkText("gallons").Click();             //works as well
             chromeDriver.Keyboard.SendKeys("12.00");
             chromeDriver.FindElementByCssSelector("input.forminput.formsubmit").Click();
-            //th.QuitDriver();
+            th.QuitDriver();
         }
 
         /// <summary>
@@ -112,11 +112,12 @@ namespace BOSSMVC5.Tests
 		/// </summary>
         [TestMethod]
         public void IndividualMonthInput()
-        {
-            TestHelper th = new TestHelper("http://teamjuxcoboss-env.us-west-1.elasticbeanstalk.com/FuelInventory/A/2017-03");
-            RemoteWebDriver chromeDriver = th.GetChromeDriver();
+		{
+			TestHelper th = new TestHelper("http://teamjuxcoboss-env.us-west-1.elasticbeanstalk.com/FuelInventory/A/");
+			RemoteWebDriver chromeDriver = th.GetChromeDriver();
 
-            chromeDriver.FindElementByPartialLinkText("gallons").Click();
+			chromeDriver.FindElementByXPath("//a[contains(@href, '-')]").Click();
+			chromeDriver.FindElementByPartialLinkText("gallons").Click();
             chromeDriver.Keyboard.SendKeys("6.00");
             chromeDriver.FindElementByCssSelector("input.forminput.formsubmit").Click();
             th.QuitDriver();
