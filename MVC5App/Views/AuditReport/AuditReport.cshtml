@@ -1,0 +1,159 @@
+﻿@using MVC5App.Models
+@using MySql.Data.MySqlClient
+@model MVC5App.Models.AuditViewModel
+
+@{
+    ViewBag.Title = "Audit Report";
+
+    //List to hold the audits
+    var recentAudits = new List<AuditViewModel> { };
+    //Used to create a dropdown list dynamically (might be good to do an SQL call instead)
+    string[] availableTables = {"FuelInventoryA", "FuelInventoryB","Inventory", "InventoryCategory", "FuelSales","Sales"};
+
+    // connect to SQL
+    using (var sql = new Tools.OurSql())
+    {
+        // default query to grab all tables in audit table
+        var query = "SELECT * " +
+                    "FROM AuditLog ";
+
+        //Check ViewData to see if there a specific table we want audits for
+        //This is taken from the URL in the controller (e.g. auditreport/index/FuelInventoryA
+        if (ViewData["table"] != null)
+        {
+            query = "SELECT * " +
+                    "FROM AuditLog " +
+                    "WHERE Entity=\'" + ViewBag.table + "\'";
+        }
+
+        // query table (MIGHT need to limit)
+        var rdr = sql.Query(query);
+
+        while (rdr.Read())
+        {
+            // store values from the database
+            // (LogID, Entity, ActionType, OnDate, PreviousValue, UpdatedValue)
+
+            var id = rdr.GetInt16(0);
+            var table = rdr.GetString(1) ?? "";
+            var actionType = rdr.GetString(2) ?? "Unknown";
+            var onDate = rdr.GetDateTime(3);
+
+            //Check if the values are empty (nullable in sql)
+            var previousValue = rdr.IsDBNull(4) ? "" : rdr.GetString(4);
+            var updatedValue = rdr.IsDBNull(5) ? "" : rdr.GetString(5);
+            try
+            {
+                var tempAudit = new AuditViewModel(id, table, actionType, onDate, previousValue, updatedValue);
+                recentAudits.Add(tempAudit);
+            }
+            catch { }
+
+        }
+        rdr.Close();
+
+    }
+}
+
+@functions
+{
+    //Method for resorting the list
+    List<AuditViewModel> Resort(List<AuditViewModel> list)
+    {
+        list.Sort((x, y) => x.logID.CompareTo(y.logID));
+        return list;
+    }
+
+
+}
+
+<script>
+    function hello() {
+        document.getElementById('fuckyou').style = "display: none";
+        //alert('@recentAudits.Count');
+    }
+</script>
+
+
+
+<h1 class="col-md-9">Audit Report</h1>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+
+            @{ <!-- Check to see what table we are showing -->
+                if (ViewData["table"] != null)
+                {
+                    <h2>Recent Changes for @ViewData["table"]</h2>
+                }
+                else
+                {
+                    <h2>Recent Changes</h2>
+                }
+            }
+        </div>
+
+        <!-- Filter and Sort Buttons-->
+        <div>
+            <div class="btn-group">
+                <a role="button" class="btn btn-default" href="@Url.Content("../index/")">View All</a>
+                <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    @foreach (var tableLink in availableTables)
+                    {
+                        <li><a href="@Url.Content("../index/" + @tableLink)">@tableLink</a></li>
+                    }
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- End buttons-->
+        <!-- Table -->
+        <div class="table-responsive top-margin">
+            <table class="table table-striped table-md">
+                <thead>
+                <tr>
+                    <th>LogID</th>
+                    <th>Table</th>
+                    <th>Action Type</th>
+                    <th>Updated Value</th>
+                    <th>Previous Value</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                @{
+                    recentAudits.Sort((x, y) => y.logID.CompareTo(x.logID)); // sort by most recent logID (default behavior)
+                    foreach (var audit in recentAudits)
+                    {
+                        var logID = audit.logID;
+                        var tableName = audit.tableName;
+                        var actionType = audit.databaseAction;
+                        var onDate = audit.onDate.ToString("MM-dd-yyyy HH:mm:ss");
+                        var previousValue = audit.previousValue;
+                        var updatedValue = audit.updatedValue;
+
+                        var actionName = this.ViewContext.RouteData.Values["action"].ToString();
+                        var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+                        <!-- Begin Row-->
+                        <tr>
+
+                            <td>@logID</td>
+                            <td>@tableName</td>
+                            <td>@actionType</td>
+                            <td>@updatedValue</td>
+                            <td>@previousValue</td>
+                            <td>@onDate</td>
+
+                        </tr>
+                        <!-- End Row-->
+                    }
+                }
+                </tbody>
+            </table>
+        </div> 
+        <!-- End Table-->
+    </div>
+</main>
+

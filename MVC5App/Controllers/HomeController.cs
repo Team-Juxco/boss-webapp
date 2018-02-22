@@ -74,16 +74,6 @@ namespace MVC5App.Controllers
             }
         }
 
-        // Report - Audit
-        [HttpGet]
-        public ActionResult AuditReport()
-        {
-            ViewBag.Message = "Audits";
-            
-            return View("AuditReport");
-
-   
-        }
 
         public ActionResult About()
         {
