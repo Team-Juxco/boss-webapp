@@ -164,6 +164,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Models\AuditModels.cs" />
     <Compile Include="Models\InventoryModels.cs" />
     <Compile Include="Tools\DateHelper.cs" />
     <Compile Include="Tools\OurSql.cs" />
@@ -245,6 +246,7 @@
     <Content Include="Views\Home\FuelInventory.cshtml" />
     <Content Include="App_Code\Helpers.cshtml" />
     <Content Include="Views\Home\FuelInventoryMonth.cshtml" />
+    <Content Include="Views\Home\AuditReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
