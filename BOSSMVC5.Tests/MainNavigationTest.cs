@@ -25,6 +25,10 @@ namespace BOSSMVC5.Tests
 			chromeDriver.FindElementByLinkText("Fuel Inventory").Click();
 			chromeDriver.FindElementByLinkText("Dashboard").Click();
 
+			// Fuel Sales -> Dashboard
+			chromeDriver.FindElementByLinkText("Fuel Sales").Click();
+			chromeDriver.FindElementByLinkText("Dashboard").Click();
+
 			th.QuitDriver();
 		}
 	}
