@@ -1,6 +1,4 @@
 ﻿@using MVC5App.Models
-@using MySql.Data.MySqlClient
-@model MVC5App.Models.AuditViewModel
 
 @{
     ViewBag.Title = "Audit Report";
@@ -44,8 +42,7 @@
             var updatedValue = rdr.IsDBNull(5) ? "" : rdr.GetString(5);
             try
             {
-                var tempAudit = new AuditViewModel(id, table, actionType, onDate, previousValue, updatedValue);
-                recentAudits.Add(tempAudit);
+                recentAudits.Add(new AuditViewModel(id, table, actionType, onDate, previousValue, updatedValue));
             }
             catch { }
 
@@ -54,26 +51,6 @@
 
     }
 }
-
-@functions
-{
-    //Method for resorting the list
-    List<AuditViewModel> Resort(List<AuditViewModel> list)
-    {
-        list.Sort((x, y) => x.logID.CompareTo(y.logID));
-        return list;
-    }
-
-
-}
-
-<script>
-    function hello() {
-        document.getElementById('fuckyou').style = "display: none";
-        //alert('@recentAudits.Count');
-    }
-</script>
-
 
 
 <h1 class="col-md-9">Audit Report</h1>
@@ -124,22 +101,20 @@
                 </thead>
                 <tbody>
                 @{
-                    recentAudits.Sort((x, y) => y.logID.CompareTo(x.logID)); // sort by most recent logID (default behavior)
+                    recentAudits.Sort((x, y) => y.LogID.CompareTo(x.LogID)); // sort by most recent logID (default behavior)
                     foreach (var audit in recentAudits)
                     {
-                        var logID = audit.logID;
-                        var tableName = audit.tableName;
-                        var actionType = audit.databaseAction;
-                        var onDate = audit.onDate.ToString("MM-dd-yyyy HH:mm:ss");
-                        var previousValue = audit.previousValue;
-                        var updatedValue = audit.updatedValue;
+                        var logId = audit.LogID;
+                        var tableName = audit.TableName;
+                        var actionType = audit.DatabaseAction;
+                        var onDate = audit.OnDate.ToString("MM-dd-yyyy HH:mm:ss");
+                        var previousValue = audit.PreviousValue;
+                        var updatedValue = audit.UpdatedValue;
 
-                        var actionName = this.ViewContext.RouteData.Values["action"].ToString();
-                        var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                         <!-- Begin Row-->
                         <tr>
 
-                            <td>@logID</td>
+                            <td>@logId</td>
                             <td>@tableName</td>
                             <td>@actionType</td>
                             <td>@updatedValue</td>

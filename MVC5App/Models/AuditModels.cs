@@ -10,25 +10,25 @@ namespace MVC5App.Models
     public class AuditViewModel
     {
         [Required]
-        public int logID { get; set; }
+        public int LogID { get; set; }
         [Required]
-        public string tableName { get; set; }
+        public string TableName { get; set; }
         [Required]
-        public string databaseAction { get; set; }
+        public string DatabaseAction { get; set; }
         //[Required]
         [DataType(DataType.Date)]
-        public DateTime onDate { get; set; }
-        public string previousValue { get; set; }
-        public string updatedValue { get; set; }
+        public DateTime OnDate { get; set; }
+        public string PreviousValue { get; set; }
+        public string UpdatedValue { get; set; }
 
         public AuditViewModel(int id, string table, string action, DateTime date, string prevValue, string updatedValue)
         {
-            this.logID = id;
-            this.tableName = table;
-            this.databaseAction = action;
-            this.onDate = date;
-            this.previousValue = prevValue;
-            this.updatedValue = updatedValue;
+            this.LogID = id;
+            this.TableName = table;
+            this.DatabaseAction = action;
+            this.OnDate = date;
+            this.PreviousValue = prevValue;
+            this.UpdatedValue = updatedValue;
         }
      
 
