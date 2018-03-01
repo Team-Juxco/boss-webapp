@@ -162,10 +162,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuditReportController.cs" />
     <Compile Include="Controllers\FuelInventoryController.cs" />
     <Compile Include="Controllers\FuelSalesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Models\AuditModels.cs" />
     <Compile Include="Models\InventoryModels.cs" />
     <Compile Include="Models\SaleModels.cs" />
     <Compile Include="Tools\DateHelper.cs" />
@@ -247,6 +249,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\FuelInventory\FuelInventory.cshtml" />
     <Content Include="App_Code\Helpers.cshtml" />
+    <Content Include="Views\AuditReport\AuditReport.cshtml" />
     <Content Include="Views\FuelInventory\FuelInventoryMonth.cshtml" />
     <Content Include="Views\FuelSales\FuelSales.cshtml" />
     <Content Include="Views\FuelSales\FuelSalesMonth.cshtml" />
