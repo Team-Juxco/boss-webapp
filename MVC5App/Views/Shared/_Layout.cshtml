@@ -28,19 +28,16 @@
                                 @Html.ActionLink("Dashboard", "Index", "Home")
                             </li>
                             <li class="nav-item">
-                                @* 
+                                @*
                                     I would like to use the following:
                                     @Html.ActionLink("Fuel Inventory", "FuelInventory", "Home", null, null)
                                     However, clicking this link from the month view brings me back to the same month
                                     instead of the fuel inventory dashboard.
                                 *@
-                                <a href="@Url.Content("~/Home/FuelInventory/")">Fuel Inventory</a>
+                                <a href="@Url.Content("~/FuelInventory/A/")">Fuel Inventory</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span data-feather="shopping-cart"></span>
-                                    Products
-                                </a>
+                                <a href="@Url.Content("~/FuelSales/Index/")">Fuel Sales</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">

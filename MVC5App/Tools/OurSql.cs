@@ -61,6 +61,8 @@ namespace Tools
 
             // execute
             cmd.ExecuteNonQuery();
+
+            // TODO: add logging here
         }
 
         public void Dispose()

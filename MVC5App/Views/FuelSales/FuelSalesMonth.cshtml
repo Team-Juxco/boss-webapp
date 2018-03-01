@@ -1,18 +1,19 @@
-﻿@model MVC5App.Models.FuelInventoryViewModel
+﻿@model MVC5App.Models.FuelSalesViewModel
+
 @{
-    ViewBag.Title = "Fuel Inventory Month";
+    ViewBag.Title = "Fuel Sales Month";
 
     // build up a sorted dictionary with a default value of 0
     // we need to do this step in order to account for entries that do not exist in the database
     var yearMonth = (DateTime)ViewData["yearMonth"];
-    var monthInventory = new SortedDictionary<DateTime, decimal>();
+    var monthSales = new SortedDictionary<DateTime, decimal>();
     {
         var date = yearMonth;
         while (true)
         {
             // do not allow values from the future to be displayed
             if (date > DateTime.Now) { break; }
-            monthInventory[date] = 0;
+            monthSales[date] = 0;
             date = date.AddDays(1);
             if (date.Month != yearMonth.Month) { break; }
         }
@@ -21,9 +22,9 @@
     // connect to SQL
     using (var sql = new Tools.OurSql())
     {
-        // query fuel inventory and populate dictionary
-        var rdr = sql.Query("SELECT OnDate, FuelAmount " +
-                            "FROM FuelInventory " +
+        // query fuel sales and populate dictionary
+        var rdr = sql.Query("SELECT OnDate, Dollars " +
+                            "FROM FuelSales " +
                             "WHERE YEAR(OnDate)=" + yearMonth.Year + " " +
                             "AND MONTH(OnDate)=" + yearMonth.Month);
         while (rdr.Read())
@@ -33,12 +34,12 @@
             // do not allow values from the future to be displayed
             if (date <= DateTime.Now)
             {
-                monthInventory[rdr.GetDateTime(0)] = rdr.GetDecimal(1);
+                monthSales[rdr.GetDateTime(0)] = rdr.GetDecimal(1);
             }
         }
     }
 }
-<h1 class="col-md-9">Fuel Inventory</h1>
+<h1 class="col-md-9">Fuel Sales</h1>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
@@ -61,10 +62,10 @@
                 @{
                     // display a table of values for the month
                     // allow the values to be altered by clicking them
-                    foreach (var item in monthInventory)
+                    foreach (var item in monthSales)
                     {
-                        var key = item.Key.ToString("MMMM d, yyyy");  // <-- Key for alterable
-                        var value = item.Value;  // <-- Value for alterable
+                        var key = item.Key.ToString("MMMM d, yyyy");  // <--- Key for alterable
+                        var value = string.Format("{0:F2}", item.Value);  // <--- Value for alterable
                         var actionName = this.ViewContext.RouteData.Values["action"].ToString();
                         var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                         <tr>
@@ -72,10 +73,10 @@
                             <td>@key</td>
                             <td>
                                 @* allow the value (fuel amount) to be altered *@
-                                <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">@value</a>
+                                <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">$@value</a>
                                 @using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { @id = @key + "-alter", @style = "display:none" }))
                                 {
-                                    @Html.TextBoxFor(m => m.FuelAmount, // <--- Value here
+                                    @Html.TextBoxFor(m => m.Dollars, // <--- Value here
                                                     new { @class = "forminput", @Value = @value })
                                     @Html.TextBoxFor(m => m.OnDate,     // <--- Key Here
                                                     new { @style = "display:none", @Value = @key })
@@ -92,6 +93,6 @@
 
 @*fill out the month charts with javascript*@
 @Helpers.FillChart(Html, "monthChart",
-                monthInventory.Keys.Select(x => x.ToString("MM / dd")).ToArray(),
-                monthInventory.Values.Select(x => x.ToString()).ToArray(),
-                monthInventory.Keys.Select(x => x.ToString("MMM d")).ToArray())
+                monthSales.Keys.Select(x => x.ToString("MM / dd")).ToArray(),
+                monthSales.Values.Select(x => x.ToString()).ToArray(),
+                monthSales.Keys.Select(x => x.ToString("MMM d")).ToArray())

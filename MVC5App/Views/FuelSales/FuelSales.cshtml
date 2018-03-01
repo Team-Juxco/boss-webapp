@@ -1,43 +1,43 @@
-﻿@model MVC5App.Models.FuelInventoryViewModel
+﻿@model MVC5App.Models.FuelSalesViewModel
 @{
-    ViewBag.Title = "Fuel Inventory";
+    ViewBag.Title = "Fuel Sales";
 
     // build up a sorted dictionary with a default value of 0
     // we need to do this step in order to account for entries that do not exist in the database
-    var recentInventory = new SortedDictionary<DateTime, decimal>();
+    var recentSales = new SortedDictionary<DateTime, decimal>();
     var today = DateTime.Today; // store today in case the day changes in the middle of a query
     today = new DateTime(today.Year, today.Month, today.Day); // strip hours/mins/secs/etc
     for (int i = 0; i < 12; i++)
     {
         DateTime date = today.AddDays(-i);
-        recentInventory[date] = 0;
+        recentSales[date] = 0;
     }
-    var yearInventory = new SortedDictionary<DateTime, decimal>();
+    var yearSales = new SortedDictionary<DateTime, decimal>();
     var month = new DateTime(today.Year, today.Month, 1);
     for (int i = 0; i < 12; i++)
     {
         DateTime date = month.AddMonths(-i);
-        yearInventory[date] = 0;
+        yearSales[date] = 0;
     }
 
     // connect to SQL
     using (var sql = new Tools.OurSql())
     {
-        // query fuel inventory and populate dictionary
-        var rdr = sql.Query("SELECT OnDate, FuelAmount " +
-                            "FROM FuelInventory " +
+        // query fuel sales and populate dictionary
+        var rdr = sql.Query("SELECT OnDate, Dollars " +
+                            "FROM FuelSales " +
                             "WHERE OnDate > Subdate(Curdate(), INTERVAL 12 DAY) " +
                             "AND OnDate <= Curdate()");
         while (rdr.Read())
         {
             // store fuel values from the database
-            recentInventory[rdr.GetDateTime(0)] = rdr.GetDecimal(1);
+            recentSales[rdr.GetDateTime(0)] = rdr.GetDecimal(1);
         }
 
-        // query fuel inventory and populate dictionary
+        // query fuel sales and populate dictionary
         rdr.Close();
-        rdr = sql.Query("SELECT YEAR(OnDate), MONTH(OnDate), AVG(FuelAmount) " +
-                            "FROM FuelInventory " +
+        rdr = sql.Query("SELECT YEAR(OnDate), MONTH(OnDate), AVG(Dollars) " +
+                            "FROM FuelSales " +
                             "WHERE OnDate > Subdate(Curdate(), INTERVAL 1 YEAR) " +
                             "AND OnDate <= Curdate() " +
                             "GROUP BY YEAR(OnDate), MONTH(OnDate)");
@@ -45,13 +45,14 @@
         {
             // store fuel values from the database
             DateTime itemMonth = new DateTime(rdr.GetInt32(0), rdr.GetInt32(1), 1);
-            yearInventory[itemMonth] = rdr.GetDecimal(2);
+            yearSales[itemMonth] = rdr.GetDecimal(2);
         }
     }
 }
-<h1 class="col-md-9">Fuel Inventory</h1>
+<h1 class="col-md-9">Fuel Sales</h1>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
     <div class="left-half">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <h2>Recent</h2>
@@ -73,10 +74,10 @@
                     @{
                         // display a table of recent values
                         // allow the values to be altered by clicking them
-                        foreach (var item in recentInventory)
+                        foreach (var item in recentSales)
                         {
                             var key = item.Key.ToString("MMMM d, yyyy"); // <-- Key for alterable
-                            var value = item.Value; // <-- Value for alterable
+                            var value = string.Format("{0:F2}", item.Value); // <-- Value for alterable
                             var actionName = this.ViewContext.RouteData.Values["action"].ToString();
                             var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                             <tr>
@@ -84,11 +85,11 @@
                                 <td>@key</td>
                                 <td>
                                     @* allow the value (fuel amount) to be altered *@
-                                    <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">@value</a>
-                                    @using (Html.BeginForm(actionName, controllerName, FormMethod.Post, new { @id = @key + "-alter", @style = "display:none" }))
+                                    <a onclick="alter('@key', '@value')" href="#edit" id="@key-display">$@value</a>
+                                    @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-alter", @style = "display:none" }))
                                     {
-                                        @Html.TextBoxFor(m => m.FuelAmount, // <--- Value for alterable
-                                                     new { @class = "forminput", @Value = @value })
+                                                    @Html.TextBoxFor(m => m.Dollars, // <--- Value for alterable
+                                                                 new { @class = "forminput", @Value = @value })
                                         @Html.TextBoxFor(m => m.OnDate,     // <---  Key for alterable
                                                      new { @style = "display:none", @Value = @key })
                                         <input class="forminput formsubmit" type="submit" value="Save" />
@@ -122,17 +123,17 @@
                     @{
                         // display a table of values for the year
                         // allows the user to navigate to single month displays
-                        foreach (var item in yearInventory)
+                        foreach (var item in yearSales)
                         {
                             var key = item.Key.ToString("MMMM yyyy");
-                            var value = item.Value;
-                            var actionName = this.ViewContext.RouteData.Values["action"].ToString();
-                            var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+                                    var value = item.Value;
+                                    var actionName = this.ViewContext.RouteData.Values["action"].ToString();
+                                    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                             <tr>
                                 @* display the key (date) and create a link to a month view *@
-                                <td><a href="~/Home/FuelInventory/@item.Key.ToString("yyyy-MM")">@key</a></td>
+                                <td><a href="@item.Key.ToString("yyyy-MM")">@key</a></td>
                                 @* display the value (fuel amount) *@
-                                <td>@string.Format("{0:F5}", value)</td>
+                                <td>$@string.Format("{0:F2}", value)</td>
                             </tr>
                         }
                     }
@@ -144,10 +145,10 @@
 
 @*fill out the weekly and yearly charts with javascript*@
 @Helpers.FillChart(Html, "weekChart",
-                recentInventory.Keys.Select(x => x.ToString("MM / dd")).ToArray(),
-                recentInventory.Values.Select(x => x.ToString()).ToArray(),
-                recentInventory.Keys.Select(x => x.ToString("MMM d")).ToArray())
+                recentSales.Keys.Select(x => x.ToString("MM / dd")).ToArray(),
+                recentSales.Values.Select(x => x.ToString()).ToArray(),
+                recentSales.Keys.Select(x => x.ToString("MMM d")).ToArray())
 @Helpers.FillChart(Html, "yearChart",
-                yearInventory.Keys.Select(x => x.ToString("MM / yy")).ToArray(),
-                yearInventory.Values.Select(x => x.ToString()).ToArray(),
-                yearInventory.Keys.Select(x => x.ToString("MMM yyyy")).ToArray())
+                yearSales.Keys.Select(x => x.ToString("MM / yy")).ToArray(),
+                yearSales.Values.Select(x => x.ToString()).ToArray(),
+                yearSales.Keys.Select(x => x.ToString("MMM yyyy")).ToArray())
