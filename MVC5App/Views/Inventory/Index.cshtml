@@ -23,12 +23,12 @@
         rdr.Close();
         if (currentCategory == 0)
         {
-            rdr = sql.Query("SELECT Id, Category, Description, Stock " +
+            rdr = sql.Query("SELECT Id, Category, Description, Stock, Price, Cost " +
                             "FROM Inventory");
         }
         else
         {
-            rdr = sql.Query("SELECT Id, Category, Description, Stock " +
+            rdr = sql.Query("SELECT Id, Category, Description, Stock, Price, Cost " +
                             "FROM Inventory " +
                             "WHERE Category = " + currentCategory);
         }
@@ -40,6 +40,10 @@
             item.Category = rdr.GetInt32(1);
             item.Description = rdr.GetString(2);
             item.Stock = rdr.GetInt32(3);
+            item.Cost = rdr.GetDecimal(5);
+            item.Price = rdr.GetDecimal(4);
+
+
             inventory[item.Id] = item;
         }
     }
@@ -89,99 +93,144 @@
 
     <div class="table-responsive top-margin">
         <table class="table table-striped table-sm">
-            <col style="width:20%">
-            <col style="width:30%">
-            <col style="width:30%">
-            <col style="width:20%">
+            <col style="width:15%">
+            <col style="width:17%">
+            <col style="width:23%">
+            <col style="width:15%">
+            <col style="width:15%">
+            <col style="width:15%">
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Category</th>
                     <th>Description</th>
                     <th>Stock</th>
+                    <th>Price</th>
+                    <th>Cost</th>
                 </tr>
             </thead>
             <tbody>
                 @{
-                    // display a table of values for the month
-                    // allow the values to be altered by clicking them
-                    foreach (var item in inventory.Values)
-                    {
-                        var key = item.Id;
-                        <tr>
-                            <td>
-                                <a onclick="alter('@key', '@item.Id', 'id')" href="#edit" id="@key-id-display">@item.Id</a>
-                                @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-id-alter", @style = "display:none" }))
-                                {
-                                    @Html.TextBoxFor(m => m.Id, new { @class = "forminput", @Value = @item.Id })
-                                    @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
-                                    @Html.TextBoxFor(m => m.Category, new { @style = "display:none", @Value = @item.Category })
-                                    @Html.TextBoxFor(m => m.Description, new { @style = "display:none", @Value = @item.Description })
-                                    @Html.TextBoxFor(m => m.Stock, new { @style = "display:none", @Value = @item.Stock })
-                                    @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
-                                    <input class="forminput formsubmit" type="submit" value="Save" />
-                                }
-                            </td>
-                            <td>
-                                <a onclick="alter('@key', '@item.Category', 'category')" href="#edit" id="@key-category-display">@categories[item.Category]</a>
-                                @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-category-alter", @style = "display:none" }))
-                                {
-                                    @Html.DropDownListFor(m => m.Category, categoryItems, new { @class = "forminput", @style = "width:50%" });
-                                    @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
-                                    @Html.TextBoxFor(m => m.Id, new { @style = "display:none", @Value = @key })
-                                    @Html.TextBoxFor(m => m.Description, new { @style = "display:none", @Value = @item.Description })
-                                    @Html.TextBoxFor(m => m.Stock, new { @style = "display:none", @Value = @item.Stock })
-                                    @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
-                                    <input class="forminput formsubmit" type="submit" value="Save" />
-                                }
-                            </td>
-                            <td>
-                                <a onclick="alter('@key', '@item.Description', 'description')" href="#edit" id="@key-description-display">@item.Description</a>
-                                @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-description-alter", @style = "display:none" }))
-                                {
-                                    @Html.TextBoxFor(m => m.Description, new { @class = "forminput", @Value = @item.Description, @style = "width:70%" })
-                                    @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
-                                    @Html.TextBoxFor(m => m.Id, new { @style = "display:none", @Value = @key })
-                                    @Html.TextBoxFor(m => m.Category, new { @style = "display:none", @Value = @item.Category })
-                                    @Html.TextBoxFor(m => m.Stock, new { @style = "display:none", @Value = @item.Stock })
-                                    @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
-                                    <input class="forminput formsubmit" type="submit" value="Save" />
-                                }
-                            </td>
-                            <td>
-                                <a onclick="alter('@key', '@item.Stock', 'stock')" href="#edit" id="@key-stock-display">@item.Stock</a>
-                                @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-stock-alter", @style = "display:none" }))
-                                {
-                                    @Html.TextBoxFor(m => m.Stock, new { @class = "forminput", @Value = @item.Stock })
-                                    @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
-                                    @Html.TextBoxFor(m => m.Id, new { @style = "display:none", @Value = @key })
-                                    @Html.TextBoxFor(m => m.Category, new { @style = "display:none", @Value = @item.Category })
-                                    @Html.TextBoxFor(m => m.Description, new { @style = "display:none", @Value = @item.Description })
-                                    @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
-                                    <input class="forminput formsubmit" type="submit" value="Save" />
-                                }
-                            </td>
-                        </tr>
-                    }
-                    using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post))
-                    {
-                        <tr class="insert-alter" style="display:none">
-                            <td>
-                                @Html.TextBoxFor(m => m.Id, new { @class = "forminput", @style = "width:100%" })
-                                @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = "-1" })
-                                @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
-                            </td>
-                            <td>@Html.DropDownListFor(m => m.Category, categoryItems, new { @class = "forminput", @style = "width:100%" })</td>
-                            <td>@Html.TextBoxFor(m => m.Description, new { @class = "forminput", @style = "width:100%" })</td>
-                            <td>@Html.TextBoxFor(m => m.Stock, new { @class = "forminput", @style = "width:100%" })</td>
-                        </tr>
-                        <tr class="insert-alter" style="display:none">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><input class="forminput formsubmit" type="submit" value="Save" style="float:right" /></td>
-                        </tr>
-                    }
+            // display a table of values for the month
+            // allow the values to be altered by clicking them
+            foreach (var item in inventory.Values)
+            {
+                var key = item.Id;
+                <tr>
+                    <td>
+                        <a onclick="alter('@key', '@item.Id', 'id')" href="#edit" id="@key-id-display">@item.Id</a>
+                        @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-id-alter", @style = "display:none" }))
+                {
+                    @Html.TextBoxFor(m => m.Id, new { @class = "forminput", @Value = @item.Id })
+                    @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
+                    @Html.TextBoxFor(m => m.Category, new { @style = "display:none", @Value = @item.Category })
+                    @Html.TextBoxFor(m => m.Description, new { @style = "display:none", @Value = @item.Description })
+                    @Html.TextBoxFor(m => m.Stock, new { @style = "display:none", @Value = @item.Stock })
+                    @Html.TextBoxFor(m => m.Price, new { @style = "display:none", @Value = @item.Price })
+                    @Html.TextBoxFor(m => m.Price, new { @style = "display:none", @Value = @item.Cost })
+                    @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
+                    <input class="forminput formsubmit" type="submit" value="Save" />
+        }
+                    </td>
+                    <td>
+                        <a onclick="alter('@key', '@item.Category', 'category')" href="#edit" id="@key-category-display">@categories[item.Category]</a>
+                        @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-category-alter", @style = "display:none" }))
+                {
+                    @Html.DropDownListFor(m => m.Category, categoryItems, new { @class = "forminput", @style = "width:50%" });
+            @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
+            @Html.TextBoxFor(m => m.Id, new { @style = "display:none", @Value = @key })
+            @Html.TextBoxFor(m => m.Description, new { @style = "display:none", @Value = @item.Description })
+            @Html.TextBoxFor(m => m.Stock, new { @style = "display:none", @Value = @item.Stock })
+            @Html.TextBoxFor(m => m.Price, new { @style = "display:none", @Value = @item.Price })
+            @Html.TextBoxFor(m => m.Cost, new { @style = "display:none", @Value = @item.Cost })
+            @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
+            <input class="forminput formsubmit" type="submit" value="Save" />
+}
+                    </td>
+                    <td>
+                        <a onclick="alter('@key', '@item.Description', 'description')" href="#edit" id="@key-description-display">@item.Description</a>
+                        @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-description-alter", @style = "display:none" }))
+                {
+                    @Html.TextBoxFor(m => m.Description, new { @class = "forminput", @Value = @item.Description, @style = "width:70%" })
+                    @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
+                    @Html.TextBoxFor(m => m.Id, new { @style = "display:none", @Value = @key })
+                    @Html.TextBoxFor(m => m.Category, new { @style = "display:none", @Value = @item.Category })
+                    @Html.TextBoxFor(m => m.Stock, new { @style = "display:none", @Value = @item.Stock })
+                    @Html.TextBoxFor(m => m.Price, new { @style = "display:none", @Value = @item.Price })
+                    @Html.TextBoxFor(m => m.Cost, new { @style = "display:none", @Value = @item.Cost })
+                    @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
+                    <input class="forminput formsubmit" type="submit" value="Save" />
+        }
+                    </td>
+                    <td>
+                        <a onclick="alter('@key', '@item.Stock', 'stock')" href="#edit" id="@key-stock-display">@item.Stock</a>
+                        @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-stock-alter", @style = "display:none" }))
+                {
+                    @Html.TextBoxFor(m => m.Stock, new { @class = "forminput", @Value = @item.Stock })
+                    @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
+                    @Html.TextBoxFor(m => m.Id, new { @style = "display:none", @Value = @key })
+                    @Html.TextBoxFor(m => m.Category, new { @style = "display:none", @Value = @item.Category })
+                    @Html.TextBoxFor(m => m.Price, new { @style = "display:none", @Value = @item.Price })
+                    @Html.TextBoxFor(m => m.Cost, new { @style = "display:none", @Value = @item.Cost })
+                    @Html.TextBoxFor(m => m.Description, new { @style = "display:none", @Value = @item.Description })
+                    @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
+                    <input class="forminput formsubmit" type="submit" value="Save" />
+        }
+                    </td>
+                    <td>
+                        <a onclick="alter('@key', '@item.Price', 'price')" href="#edit" id="@key-price-display">@item.Price</a>
+                        @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-price-alter", @style = "display:none" }))
+                {
+                    @Html.TextBoxFor(m => m.Price, new { @class = "forminput", @Value = @item.Price })
+                    @Html.TextBoxFor(m => m.Stock, new { @style = "display:none", @Value = @item.Stock })
+                    @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
+                    @Html.TextBoxFor(m => m.Id, new { @style = "display:none", @Value = @key })
+                    @Html.TextBoxFor(m => m.Category, new { @style = "display:none", @Value = @item.Category })
+                    @Html.TextBoxFor(m => m.Cost, new { @style = "display:none", @Value = @item.Cost })
+                    @Html.TextBoxFor(m => m.Description, new { @style = "display:none", @Value = @item.Description })
+                    @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
+                    <input class="forminput formsubmit" type="submit" value="Save" />
+        }
+                    </td>
+                    <td>
+                        <a onclick="alter('@key', '@item.Cost', 'cost')" href="#edit" id="@key-cost-display">@item.Cost</a>
+                        @using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post, new { @id = @key + "-cost-alter", @style = "display:none" }))
+                {
+                    @Html.TextBoxFor(m => m.Cost, new { @class = "forminput", @Value = @item.Cost })
+                    @Html.TextBoxFor(m => m.Stock, new { @style = "display:none", @Value = @item.Stock })
+                    @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = @key })
+                    @Html.TextBoxFor(m => m.Id, new { @style = "display:none", @Value = @key })
+                    @Html.TextBoxFor(m => m.Category, new { @style = "display:none", @Value = @item.Category })
+                    @Html.TextBoxFor(m => m.Price, new { @style = "display:none", @Value = @item.Price })
+
+                    @Html.TextBoxFor(m => m.Description, new { @style = "display:none", @Value = @item.Description })
+                    @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
+                    <input class="forminput formsubmit" type="submit" value="Save" />
+        }
+                    </td>
+                </tr>
+    }
+    using (Html.BeginForm(actionName + "/", controllerName, FormMethod.Post))
+    {
+        <tr class="insert-alter" style="display:none">
+            <td>
+                @Html.TextBoxFor(m => m.Id, new { @class = "forminput", @style = "width:100%" })
+                @Html.TextBoxFor(m => m.OriginalId, new { @style = "display:none", @Value = "-1" })
+                @Html.TextBoxFor(m => m.ViewingCategory, new { @style = "display:none", @Value = @currentCategory })
+            </td>
+            <td>@Html.DropDownListFor(m => m.Category, categoryItems, new { @class = "forminput", @style = "width:100%" })</td>
+            <td>@Html.TextBoxFor(m => m.Description, new { @class = "forminput", @style = "width:100%" })</td>
+            <td>@Html.TextBoxFor(m => m.Stock, new { @class = "forminput", @style = "width:100%" })</td>
+            <td>@Html.TextBoxFor(m => m.Price, new { @class = "forminput", @style = "width:100%" })</td>
+            <td>@Html.TextBoxFor(m => m.Cost, new { @class = "forminput", @style = "width:100%" })</td>
+        </tr>
+        <tr class="insert-alter" style="display:none">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input class="forminput formsubmit" type="submit" value="Save" style="float:right" /></td>
+        </tr>
+}
                 }
             </tbody>
         </table>

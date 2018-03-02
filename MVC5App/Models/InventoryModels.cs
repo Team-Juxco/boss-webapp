@@ -42,6 +42,12 @@ namespace MVC5App.Models
 
         [Required]
         public int Stock { get; set; }
+
+        [Required]
+        public Decimal Price { get; set; }
+
+        [Required]
+        public Decimal Cost {  get;  set; }
     }
 
     public class InventoryChangeViewModel
@@ -65,5 +71,12 @@ namespace MVC5App.Models
 
         [Required]
         public int ViewingCategory { get; set; }
+
+        [Required]
+        public Decimal Cost { get; set; }
+
+        [Required]
+        public Decimal Price { get; set; }
+        
     }
 }

@@ -27,7 +27,9 @@ namespace MVC5App.Controllers
                     { "Id", model.Id + "" },
                     { "Category", model.Category + "" },
                     { "Description", model.Description },
-                    { "Stock", model.Stock + "" }
+                    { "Stock", model.Stock + "" },
+                    { "Price", model.Price + "" },
+                    { "Cost", model.Cost + "" }
                 };
                 sql.Insert("Inventory", values);
             }
@@ -43,7 +45,9 @@ namespace MVC5App.Controllers
                     { "Id", model.Id + "" },
                     { "Category", model.Category + "" },
                     { "Description", model.Description },
-                    { "Stock", model.Stock + "" }
+                    { "Stock", model.Stock + "" },
+                    {"Price", model.Price + "" },
+                    {"Cost", model.Cost + "" }
                 };
                 sql.Update("Inventory", "Id", model.OriginalId + "", values);
             }
