@@ -64,7 +64,17 @@ namespace Tools
 
             // TODO: add logging here
         }
+        public void UpdateSales(string categoryName, string onDate, Decimal newValue)
+        {
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = sql;
+            cmd.CommandText = "UPDATE Sales " +
+                              "SET `" + categoryName + "` = '" + newValue + "' " +
+                              "WHERE `OnDate` = '" + onDate + "'";
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
 
+        }
         public void Dispose()
         {
             sql.Close();
