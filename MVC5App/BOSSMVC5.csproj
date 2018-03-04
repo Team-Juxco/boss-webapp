@@ -167,9 +167,10 @@
     <Compile Include="Controllers\FuelSalesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Models\AuditModels.cs" />
     <Compile Include="Models\InventoryModels.cs" />
-    <Compile Include="Models\SaleModels.cs" />
+    <Compile Include="Models\SalesModel.cs" />
     <Compile Include="Tools\DateHelper.cs" />
     <Compile Include="Tools\OurSql.cs" />
     <Compile Include="Global.asax.cs">
@@ -253,6 +254,7 @@
     <Content Include="Views\FuelInventory\FuelInventoryMonth.cshtml" />
     <Content Include="Views\FuelSales\FuelSales.cshtml" />
     <Content Include="Views\FuelSales\FuelSalesMonth.cshtml" />
+    <Content Include="Views\Sales\Sales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

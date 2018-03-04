@@ -1,0 +1,503 @@
+﻿@model MVC5App.Models.SalesModel
+@{
+    ViewBag.Title = "Sales";
+}
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    @Scripts.Render("~/Scripts/sales.js")
+    <style>
+        .category-select {
+            float: left;
+            border: solid 2px;
+            background-color: #3e444c;
+            border-color: transparent;
+            padding: 10px 15px;
+            margin: 1px;
+            color: white;
+        }
+
+        #sales-year-select, #sales-daily-month-select, #sales-daily-year-select {
+            font-size: 30px;
+            color: #c8c9bf;
+            background-color: #272b30;
+            border: 0px;
+        }
+
+        #sales-container {
+            clear: both;
+        }
+
+        .row-data {
+            text-align: center;
+        }
+
+        .table table-striped table-sm, #sales-table {
+            display: table;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        #numInput, #saveBut {
+            background-color: transparent;
+            border: 0px;
+            color: beige;
+            outline: none;
+            border-bottom: dotted;
+            border-bottom-color: beige;
+        }
+
+        .clickable, .nav-item {
+            cursor: pointer;
+        }
+    </style>
+    <title>Sale Practice Page</title>
+</head>
+<h1 class="col-md-9"> Sales</h1>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div>
+        <div id="select-1" class="category-select" onclick="setCategory('Fountain',1)">
+            <ul class="nav flex-column">
+                <li class="nav-item">Fountain</li>
+            </ul>
+        </div>
+        <div id="select-2" class="category-select" onclick="setCategory('BeerWine',2)">
+            <ul class="nav flex-column">
+                <li class="nav-item">Beer & Wine </li>
+            </ul>
+        </div>
+        <div id="select-3" class="category-select" onclick="setCategory('Supplies',3)">
+            <ul class="nav flex-column">
+                <li class="nav-item">Supplies</li>
+            </ul>
+        </div>
+        <div id="select-4" class="category-select" onclick="setCategory('CigPack',4)">
+            <ul class="nav flex-column">
+                <li class="nav-item">Cig Pack</li>
+            </ul>
+        </div>
+        <div id="select-5" class="category-select" onclick="setCategory('CigCarton',5)">
+            <ul class="nav flex-column">
+                <li class="nav-item">Cig Carton</li>
+            </ul>
+        </div>
+        <div id="select-6" class="category-select" onclick="setCategory('Lotto',6)">
+            <ul class="nav flex-column">
+                <li class="nav-item">Lotto</li>
+            </ul>
+        </div>
+        <div id="select-7" class="category-select" onclick="setCategory('Propane',7)">
+            <ul class="nav flex-column">
+                <li class="nav-item">Propane</li>
+            </ul>
+        </div>
+        <div id="select-8" class="category-select" onclick="setCategory('PackBeverage',8)">
+            <ul class="nav flex-column">
+                <li class="nav-item">Packaged Beverage</li>
+            </ul>
+        </div>
+        <div id="select-9" class="category-select" onclick="setCategory('Coffee',9)">
+            <ul class="nav flex-column">
+                <li class="nav-item">Coffee</li>
+            </ul>
+        </div>
+        <div id="select-10" class="category-select" onclick="setCategory('PhoneCard',10)">
+            <ul class="nav flex-column">
+                <li class="nav-item">PhoneCard</li>
+            </ul>
+        </div>
+        <div id="select-11" class="category-select" @*onclick="setCategory('Tabacco')"*@>
+            <ul class="nav flex-column">
+                <li class="nav-item">Tabacco</li>
+            </ul>
+        </div>
+        <div id="select-12" class="category-select" @*onclick="setCategory('GiftCard')"*@>
+            <ul class="nav flex-column">
+                <li class="nav-item">Gift Card</li>
+            </ul>
+        </div>
+    </div>
+    <br />
+    <div id="sales-container">
+        <div class="left-half">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h2>
+                    Daily View of
+                    <select id="sales-daily-month-select" onchange="displayDaily()">
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">Mar</option>
+                        <option value="4">Apri</option>
+                        <option value="5">May</option>
+                        <option value="6">Jun</option>
+                        <option value="7">Jul</option>
+                        <option value="8">Aug</option>
+                        <option value="9">Sep</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
+                    </select>
+                    <select id="sales-daily-year-select" onchange="displayDaily()">
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                    </select>
+                </h2>
+            </div>
+            <canvas class="my-4" id="recentSalesChart" width="800" height="450"></canvas>
+            <table id="sales-table" class="table table-striped table-sm" style="display:table"></table>
+        </div>
+        <div class="right-half">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <div id="yearly-container">
+                    <h2>Yearly</h2>
+                    <canvas class="my-4" id="yearlySalesChart" width="800" height="450"></canvas>
+                    <table id="sales-table-yearly" class="table table-striped table-sm" style="display:table"></table>
+                </div>
+                <div id="monthly-container" style="display:none">
+                    <div onclick="displayCategoryYearly()"> Back to Yearly</div>
+                    <h2>
+                        Monthly View of <select id="sales-year-select" onchange="displayCategoryMonthly()">
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                        </select>
+                    </h2>
+
+                    <canvas class="my-4" id="monthlySalesChart" width="800" height="450"></canvas>
+                    <table id="sales-table-monthly" class="table table-striped table-sm"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+@*<script>
+        var catName = "";
+        var catNum = 1;
+        var viewYear = "";
+        var chartLoaded = false;
+        var currentEditId;
+        var replacementId;
+        $(document).ready(function () {
+            setDates();
+            setCategory("Fountain",1);
+        });
+        function highlightCat() {
+            for (var i = 1; i <= 12; i++) {
+                if (i === catNum) {
+                    document.getElementById('select-' + catNum).style.backgroundColor = "#3e444c";
+                    console.log("not hiding " + catNum);
+                    continue;
+                }
+                console.log("hiding" + i)
+                document.getElementById('select-' + i).style.backgroundColor = "transparent";
+            }
+        }
+
+        function setCategory(categoryName, val) {
+            catName = categoryName;
+            displayDaily();
+            displayCategoryYearly();
+            catNum = val;
+            highlightCat();
+
+        }
+
+        function displayDaily() {
+
+            //clear sales table
+            $('#sales-table').empty();
+            //create thead
+            var thead = "<thead><tr><th> Date</th>" + "<th>" + catName + " Gross</th>" + "<th>" + catName + " Net</th></tr></thead>";
+            //append thead to table
+            $('#sales-table').append(thead);
+
+            //get dateRange
+            var dateRange = getDateRange();
+            currentEditId = null;
+            //get data from backend
+            $.ajax({
+                type: "POST",
+                url: "/Sales/GetSalesData",
+                contentType: "application/json; charset=utf-8",
+                data: "{categoryName:'" + catName + "',beginDate:'" + dateRange.beginDate + "', endDate: '" + dateRange.endDate + "'}",
+                success: function (data) {
+                    var dataArr = data.salesDataList;
+                    var tbody = "<tbody>";
+                    for (var i in dataArr) {
+                        var onDate = strToDate(dataArr[i].dateString);
+                        //populate tbody
+                        tbody += "<tr class='row-data'><td>" + dataArr[i].dateString + "</td>" +
+                            "<td class='clickable' id='" + onDate + "-" + catName + "Gross-dis' onclick='toggleUpdate(this)'>" + dataArr[i].gross +"</td>"
+                            +"<td id='" + onDate + "-" + catName + "Gross-upd' style='display:none'></td>" +
+                            "<td class='clickable' id='" + onDate + "-" + catName + "Net-dis' onclick='toggleUpdate(this)'>" + dataArr[i].net + "</td>"
+                            + "<td id='" + onDate + "-" + catName + "Net-upd' style='display:none'></td></tr> ";
+                    }
+                    tbody += "</tbody>";
+                    //append tbody to table
+                    $('#sales-table').append(tbody);
+
+                    //$('#sales-table').sortable();
+                    fillChart(dataArr, "recent");
+                }
+            });
+
+        }
+        function displayCategoryMonthly(year) {
+            if (year == null) {
+                viewYear = $('#sales-year-select').find(":selected").text();
+            } else {
+                viewYear = year;
+            }
+
+            //clear sales table and hide/show tables
+            $('#sales-table-monthly').empty();
+            $('#monthly-container').show();
+            $('#yearly-container').hide();
+            $('#sales-year-select').val(viewYear);
+
+            //create thead
+            var thead = "<thead><tr><th> Month</th>" + "<th>" + catName + " Gross</th>" + "<th>" + catName + " Net</th></tr></thead>";
+            //append thead to table
+            $('#sales-table-monthly').append(thead);
+            //var year = $('#sales-year-select').val();
+            console.log(viewYear);
+            $.ajax({
+                type: "POST",
+                url: "/Sales/GetMonthlySalesData",
+                contentType: "application/json; charset=utf-8",
+                data: "{categoryName:'" + catName + "',year: '" + viewYear + "'}",
+                success: function (data) {
+                    console.log(data)
+                    var dataArr = data.monthlySalesList;
+                    var tbody = "<tbody>";
+
+                    for (var i in dataArr) {
+
+                        //populate tbody
+                        tbody += "<tr class='row-data'><td >" + dataArr[i].month + "</td>" +
+                            "<td>" + dataArr[i].monthlyGross + "</td>" +
+                            "<td>" + dataArr[i].monthlyNet + "</td></tr>";
+                    }
+                    tbody += "</tbody>";
+                    //append tbody to table
+                    $('#sales-table-monthly').append(tbody);
+                    fillChart(dataArr, "monthly");
+                }
+            });
+        }
+
+        function displayCategoryYearly() {
+            //clear sales table
+            $('#monthly-container').hide();
+            $('#yearly-container').show();
+            $('#sales-table-yearly').empty();
+            //create thead
+            var thead = "<thead><tr><th> Year</th>" + "<th>" + catName + " Gross</th>" + "<th>" + catName + " Net</th></tr></thead>";
+            //append thead to table
+            $('#sales-table-yearly').append(thead);
+            $('#sales-year-select').val();
+            $.ajax({
+                type: "POST",
+                url: "/Sales/GetYearlySalesData",
+                contentType: "application/json; charset=utf-8",
+                data: "{categoryName:'" + catName + "'}",
+                success: function (data) {
+                    var dataArr = data.yearlySalesList;
+                    var tbody = "<tbody>";
+
+                    for (var i in dataArr) {
+
+                        //populate tbody
+                        tbody += "<tr class='row-data'><td class='clickable' onclick='displayCategoryMonthly("+ dataArr[i].year +")'>" + dataArr[i].year + "</td>" +
+                            "<td>" + dataArr[i].yearlyGross + "</td>" +
+                            "<td>" + dataArr[i].yearlyNet + "</td></tr>";
+                    }
+                    tbody += "</tbody>";
+                    //append tbody to table
+                    $('#sales-table-yearly').append(tbody);
+                    fillChart(dataArr, "yearly")
+                }
+            });
+        }
+
+
+        function testUpdate() {
+            $.ajax({
+                type: "POST",
+                url: "/Sales/Update",
+                data: { tableName: 'Sales', categoryName: 'candy', onDate: '2016-01-01', gross: '10.0', net: '11.0' },
+                success: function (data) {
+
+                }
+            });
+
+        }
+
+        function fillChart(dataArr, chartType) {
+            var ctx;
+            var dateLabel = [];
+            var grossData = [];
+            var netData = [];
+
+            if (chartType == "recent") {
+                var ctx = document.getElementById("recentSalesChart").getContext("2d");
+                for (var i in dataArr) {
+                    dateLabel[i] = dataArr[i].dateString;
+                    grossData[i] = dataArr[i].gross;
+                    netData[i] = dataArr[i].net;
+                }
+            } else if (chartType == "monthly") {
+                ctx = document.getElementById("monthlySalesChart").getContext("2d");
+                for (var i in dataArr) {
+                    dateLabel[i] = dataArr[i].month;
+                    grossData[i] = dataArr[i].monthlyGross;
+                    netData[i] = dataArr[i].monthlyNet;
+                }
+            } else {
+                ctx = document.getElementById("yearlySalesChart").getContext("2d");
+                for (var i in dataArr) {
+                    dateLabel[i] = dataArr[i].year;
+                    grossData[i] = dataArr[i].yearlyGross;
+                    netData[i] = dataArr[i].yearlyNet;
+                }
+            }
+            var myChart = new Chart(ctx, { type: 'line', data: [], options: [] });
+            myChart.destroy(true);
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dateLabel,
+                    datasets: [{
+                        label: "Gross",
+                        data: grossData,
+                        lineTension: 0,
+                        backgroundColor: 'transparent',
+                        borderColor: '#007bff',
+                        borderWidth: 4,
+                        pointBackgroundColor: '#007bff'
+                    },
+                    {
+                        label: "Net",
+                        data: netData,
+                        lineTension: 0,
+                        backgroundColor: 'transparent',
+                        borderColor: '#ff0033',
+                        borderWidth: 4,
+                        pointBackgroundColor: '#ff0033'
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: true,
+                    }
+                }
+            });
+        }
+        function clearCanvas(ctx) {
+            ctx = ctx.getContext("2d");
+            ctx.clearRect(0, 0, ctx.width, ctx.height);
+            return ctx;
+        }
+        function setDates(){
+            var curDate = new Date();
+            document.getElementById("sales-daily-month-select").value = curDate.getMonth() + 1;
+            document.getElementById("sales-daily-year-select").value = curDate.getFullYear();
+        }
+        function getDateRange() {
+            var dateRange = {"beginDate":"","endDate":""};
+            var month = document.getElementById("sales-daily-month-select").value;
+            if (month < 10) {
+                month = "0" + month;
+            }
+            var year = document.getElementById("sales-daily-year-select").value;
+            switch (month) {
+                case "01":
+                case "03":
+                case "05":
+                case "07":
+                case "08":
+                case 10:
+                case 12:
+                    dateRange.endDate = year + "-" + month + "-31";
+                    dateRange.beginDate = year + "-" + month + "-01";
+                    break;
+                case "02":
+                case "04":
+                case "06":
+                case "09":
+                case 11:
+                    dateRange.endDate = year + "-" + month + "-30";
+                    dateRange.beginDate = year + "-" + month + "-01";
+                    break;
+                default:
+                    break;
+            }
+            console.table(dateRange);
+            return dateRange
+        }
+        function strToDate(dateString) {
+            var dateFormatted = new Date(dateString);
+            var day = dateFormatted.getDate();
+            var month = dateFormatted.getMonth() + 1;
+            if (day < 10) {
+                day = "0" + day;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            dateFormatted = dateFormatted.getFullYear() + "-" + month + "-" + day;
+            return dateFormatted;
+        }    var currentEditId;
+        var replacementId;
+        function toggleUpdate(dom) {
+            domHolder = dom;
+            //if new currentEditId != Id
+            if (currentEditId != dom.getAttribute('id') && currentEditId != null) {
+                document.getElementById(currentEditId).style.display = "table-cell";
+                document.getElementById(replacementId).style.display = "none";
+            }
+
+            currentEditId = dom.getAttribute('id');
+            replacementId = currentEditId.replace("-dis", "-upd");
+            document.getElementById(replacementId).style.display = 'table-cell';
+            dom.style.display = 'none';
+            var input = document.getElementById(replacementId);
+            var originalVal = dom.textContent;
+            console.log(originalVal);
+            input.innerHTML = "<input id='numInput' type='number' value='" + originalVal + "'><span id='saveBut' onclick='submitChange()';>Save</span>";
+
+        }
+        function submitChange() {
+            var newValue = document.getElementById('numInput').value;
+            console.log(currentEditId + " " + document.getElementById('numInput').value);
+            var submitData = currentEditId.split("-");
+            console.table(submitData);
+
+            var onDate = submitData[0] + "-" + submitData[1] + "-" + submitData[2];
+            $.ajax({
+                type: "POST",
+                url: "/Sales/Update",
+                contentType: "application/json; charset=utf-8",
+                data: "{onDate:'" + onDate + "', columnName:'" + submitData[3] + "', newValue:'" + newValue + "'}",
+                success: function () {
+                    displayDaily();
+                }
+            });
+        }
+</script>*@
+
+
+
