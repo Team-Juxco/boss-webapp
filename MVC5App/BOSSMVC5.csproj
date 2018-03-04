@@ -170,6 +170,7 @@
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Models\AuditModels.cs" />
     <Compile Include="Models\InventoryModels.cs" />
+    <Compile Include="Models\SaleModel.cs" />
     <Compile Include="Models\SalesModel.cs" />
     <Compile Include="Tools\DateHelper.cs" />
     <Compile Include="Tools\OurSql.cs" />
@@ -210,6 +211,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sales.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
