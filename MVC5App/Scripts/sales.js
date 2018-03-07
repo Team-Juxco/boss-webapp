@@ -72,13 +72,10 @@ function displayDaily() {
 
 }
 
+
 //display the monthly sales table and graph
 function displayCategoryMonthly(year) {
-    if (year === null) {
-        viewYear = $('#sales-year-select').find(":selected").text();
-    } else {
-        viewYear = year;
-    }
+    viewYear = year;
 
     //clear sales table and hide/show tables
     $('#sales-table-monthly').empty();
@@ -113,6 +110,11 @@ function displayCategoryMonthly(year) {
             fillChart(dataArr, "monthly");
         }
     });
+}
+
+function getYear(obj) {
+    var year = obj.value;
+    return year;
 }
 
 //dsiplay the yearly sales table and graph
