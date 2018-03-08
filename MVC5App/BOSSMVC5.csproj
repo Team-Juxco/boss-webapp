@@ -164,7 +164,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FuelInventoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\CStoreInventoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Models\InventoryModels.cs" />
     <Compile Include="Tools\DateHelper.cs" />
@@ -247,8 +247,8 @@
     <Content Include="Views\FuelInventory\FuelInventory.cshtml" />
     <Content Include="App_Code\Helpers.cshtml" />
     <Content Include="Views\FuelInventory\FuelInventoryMonth.cshtml" />
-    <Content Include="Views\Inventory\Index.cshtml" />
-    <Content Include="Views\Inventory\Error.cshtml" />
+    <Content Include="Views\CStoreInventory\Index.cshtml" />
+    <Content Include="Views\CStoreInventory\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

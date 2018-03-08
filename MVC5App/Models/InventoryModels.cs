@@ -27,7 +27,7 @@ namespace MVC5App.Models
         public int Name { get; set; }
     }
 
-    public class InventoryViewModel
+    public class CStoreInventoryViewModel
     {
         [Required]
         public int Id { get; set; }
@@ -44,13 +44,13 @@ namespace MVC5App.Models
         public int Stock { get; set; }
 
         [Required]
-        public Decimal Price { get; set; }
+        public Decimal SalePrice { get; set; }
 
         [Required]
-        public Decimal Cost {  get;  set; }
+        public Decimal ListPrice {  get;  set; }
     }
 
-    public class InventoryChangeViewModel
+    public class CStoreInventoryChangeViewModel
     {
         [Required]
         public int OriginalId { get; set; }
@@ -70,13 +70,10 @@ namespace MVC5App.Models
         public int Stock { get; set; }
 
         [Required]
-        public int ViewingCategory { get; set; }
+        public Decimal SalePrice { get; set; }
 
         [Required]
-        public Decimal Cost { get; set; }
-
-        [Required]
-        public Decimal Price { get; set; }
+        public Decimal ListPrice { get; set; }
         
     }
 }

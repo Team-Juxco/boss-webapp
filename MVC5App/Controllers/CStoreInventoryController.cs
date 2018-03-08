@@ -7,17 +7,17 @@ using System.Web.Mvc;
 
 namespace MVC5App.Controllers
 {
-    public class InventoryController : Controller
+    public class CStoreInventoryController : Controller
     {
         [HttpGet]
         public ActionResult Index()
         {
-            ViewData["category"] = Request["category"];
-            if (ViewData["category"] == null) { ViewData["category"] = 0; }
+            ViewData["sort"] = Request["sort"];
+            if (ViewData["sort"] == null) { ViewData["sort"] = "category"; }
             return View();
         }
 
-        private void Insert(InventoryChangeViewModel model)
+        private void Insert(CStoreInventoryChangeViewModel model)
         {
             // insert a new value into the database
             using (var sql = new Tools.OurSql())
@@ -28,14 +28,14 @@ namespace MVC5App.Controllers
                     { "Category", model.Category + "" },
                     { "Description", model.Description },
                     { "Stock", model.Stock + "" },
-                    { "Price", model.Price + "" },
-                    { "Cost", model.Cost + "" }
+                    { "SalePrice", model.SalePrice + "" },
+                    { "ListPrice", model.ListPrice + "" }
                 };
-                sql.Insert("Inventory", values);
+                sql.Insert("CStoreInventory", values);
             }
         }
 
-        private void Update(InventoryChangeViewModel model)
+        private void Update(CStoreInventoryChangeViewModel model)
         {
             // update values in to the databse
             using (var sql = new Tools.OurSql())
@@ -46,17 +46,17 @@ namespace MVC5App.Controllers
                     { "Category", model.Category + "" },
                     { "Description", model.Description },
                     { "Stock", model.Stock + "" },
-                    {"Price", model.Price + "" },
-                    {"Cost", model.Cost + "" }
+                    { "SalePrice", model.SalePrice + "" },
+                    { "ListPrice", model.ListPrice + "" }
                 };
-                sql.Update("Inventory", "Id", model.OriginalId + "", values);
+                sql.Update("CStoreInventory", "Id", model.OriginalId + "", values);
             }
         }
 
         [HttpPost]
-        public ActionResult Index(InventoryChangeViewModel model)
+        public ActionResult Index(CStoreInventoryChangeViewModel model)
         {
-            ViewData["category"] = Request["category"];
+            ViewData["sort"] = Request["sort"];
 
             // check for parse errors
             if (Request.HttpMethod == "POST")
@@ -79,8 +79,6 @@ namespace MVC5App.Controllers
                         ViewData["error"] = ex.Message;
                         return View("Error");
                     }
-
-                    ViewData["category"] = Request["ViewingCategory"];
                 }
                 else
                 {
@@ -99,7 +97,7 @@ namespace MVC5App.Controllers
                 }
             }
 
-            if (ViewData["category"] == null) { ViewData["category"] = 0; }
+            if (ViewData["sort"] == null) { ViewData["sort"] = "category"; }
             return View();
         }
     }
