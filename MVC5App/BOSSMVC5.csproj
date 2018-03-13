@@ -162,6 +162,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\RestaurantInventoryController.cs" />
     <Compile Include="Controllers\FuelInventoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CStoreInventoryController.cs" />
@@ -249,6 +250,8 @@
     <Content Include="Views\FuelInventory\FuelInventoryMonth.cshtml" />
     <Content Include="Views\CStoreInventory\Index.cshtml" />
     <Content Include="Views\CStoreInventory\Error.cshtml" />
+    <Content Include="Views\RestaurantInventory\Error.cshtml" />
+    <Content Include="Views\RestaurantInventory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

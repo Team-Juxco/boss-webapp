@@ -76,4 +76,26 @@ namespace MVC5App.Models
         public Decimal ListPrice { get; set; }
         
     }
+
+    public class RestaurantInventoryViewModel
+    {
+        [Required]
+        public int Id { get; set; }
+
+        [Required]
+        [MaxLength(45, ErrorMessage = "Item cannot be longer than 45 characters.")]
+        [DataType(DataType.Text)]
+        public string Item { get; set; }
+
+        [Required]
+        public Decimal Cost { get; set; }
+
+        [Required]
+        public Decimal SoldFor { get; set; }
+
+        [Required]
+        public int AmountSold { get; set; }
+
+    }
+
 }
