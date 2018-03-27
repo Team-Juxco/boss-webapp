@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
+using System;
 
 namespace BOSSMVC5.Tests
 {
@@ -56,5 +57,15 @@ namespace BOSSMVC5.Tests
 				return false;
 			}
 		}
+
+        /// <summary>
+		/// Selects a random int between a min and max.
+		/// </summary>
+        public int randomInt(int min, int max)
+        {
+            Random r = new Random();
+            int n = r.Next(min, max);
+            return n;
+        }
 	}
 }
