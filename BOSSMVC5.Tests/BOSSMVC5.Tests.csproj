@@ -67,7 +67,6 @@
     <Compile Include="FuelInventoryTest.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="MainNavigationTest.cs" />
-    <Compile Include="StoreSalesTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
