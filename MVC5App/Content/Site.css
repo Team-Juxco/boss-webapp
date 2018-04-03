@@ -64,6 +64,10 @@ textarea {
     width: 60px;
 }
 
+.forminput option {
+    background: #272b30;
+}
+
 .formsubmit:hover {
     color: white;
 }
