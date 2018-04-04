@@ -67,5 +67,7 @@ namespace BOSSMVC5.Tests
             int n = r.Next(min, max);
             return n;
         }
+
+
 	}
 }

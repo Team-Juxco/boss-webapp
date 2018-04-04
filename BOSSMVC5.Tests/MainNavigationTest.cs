@@ -29,7 +29,17 @@ namespace BOSSMVC5.Tests
 			chromeDriver.FindElementByLinkText("Fuel Sales").Click();
 			chromeDriver.FindElementByLinkText("Dashboard").Click();
 
-			th.QuitDriver();
+            // Store Sales -> Dashboard
+            chromeDriver.FindElementByLinkText("Store Sales").Click();
+            chromeDriver.FindElementByLinkText("Dashboard").Click();
+
+            // C-Store Inventory -> Dashboard
+            chromeDriver.FindElementByLinkText("C-Store Inventory").Click();
+            chromeDriver.FindElementByLinkText("Dashboard").Click();
+
+
+
+            th.QuitDriver();
 		}
 	}
 }

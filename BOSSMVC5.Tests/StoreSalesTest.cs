@@ -35,7 +35,7 @@ namespace BOSSMVC5.Tests
             chromeDriver.FindElementById("select-1").Click();
             int n = th.randomInt(1, 12);
 
-            chromeDriver.FindElementByXPath("//select[@id='sales-daily-month-select']/option[@value='" + n +"']").Click();
+            chromeDriver.FindElementByXPath("//select[@id='sales-daily-month-select']/option[@value='" + n + "']").Click();
             th.QuitDriver();
         }
 
@@ -54,10 +54,10 @@ namespace BOSSMVC5.Tests
             //th.QuitDriver();
         }
 
-        
+
         /// <summary>
-		/// Tests the "Beer & Wine" link on Store Sales screen
-		/// </summary>
+        /// Tests the "Beer & Wine" link on Store Sales screen
+        /// </summary>
         [TestMethod]
         public void OpenBeerWine()
         {
@@ -183,7 +183,7 @@ namespace BOSSMVC5.Tests
             RemoteWebDriver chromeDriver = th.GetChromeDriver();
             // Se vilect random Categoryew
             int n1 = th.randomInt(1, 10);
-            chromeDriver.FindElementById("select-"+n1).Click();
+            chromeDriver.FindElementById("select-" + n1).Click();
             // Select random daily view of Month 
             int n2 = th.randomInt(1, 3);
             chromeDriver.FindElementByXPath("//select[@id='sales-daily-month-select']/option[@value='" + n2 + "']").Click();
