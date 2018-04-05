@@ -54,9 +54,13 @@ namespace BOSSMVC5.Tests
             RemoteWebDriver chromeDriver = th.GetChromeDriver();
 
             chromeDriver.FindElementByXPath("//a[contains(@id, '-category-display')]").Click();
-            chromeDriver.FindElementByXPath("//select[@id='category']").Click();
-            // chromeDriver.FindElementByCssSelector("input.forminput.formsubmit").Click();
-            //th.QuitDriver();
+            chromeDriver.Keyboard.SendKeys(Keys.Tab);
+            chromeDriver.Keyboard.SendKeys(Keys.Return);
+            chromeDriver.Keyboard.SendKeys(Keys.Down);
+            chromeDriver.Keyboard.SendKeys(Keys.Return);
+            chromeDriver.Keyboard.SendKeys(Keys.Tab);
+            chromeDriver.Keyboard.SendKeys(Keys.Return);
+            th.QuitDriver();
         }
 
         /// <summary>
@@ -70,8 +74,8 @@ namespace BOSSMVC5.Tests
 
             chromeDriver.FindElementByXPath("//a[contains(@id, '-description-display')]").Click();
             chromeDriver.Keyboard.SendKeys("Hot Cheetos");
-
-            //th.QuitDriver();
+            chromeDriver.Keyboard.SendKeys(Keys.Return);
+            th.QuitDriver();
         }
 
         /// <summary>
@@ -85,7 +89,7 @@ namespace BOSSMVC5.Tests
 
             chromeDriver.FindElementByXPath("//a[contains(@id, '-stock-display')]").Click();
             chromeDriver.Keyboard.SendKeys("82");
-            chromeDriver.FindElementByCssSelector("input.forminput.formsubmit").Click();
+            chromeDriver.Keyboard.SendKeys(Keys.Return);
             th.QuitDriver();
         }
 
@@ -100,7 +104,7 @@ namespace BOSSMVC5.Tests
 
             chromeDriver.FindElementByXPath("//a[contains(@id, '-price-display')]").Click();
             chromeDriver.Keyboard.SendKeys("1.00");
-            chromeDriver.FindElementByCssSelector("input.forminput.formsubmit").Click();
+            chromeDriver.Keyboard.SendKeys(Keys.Return);
             th.QuitDriver();
         }
 
@@ -115,12 +119,12 @@ namespace BOSSMVC5.Tests
 
             chromeDriver.FindElementByXPath("//a[contains(@id, '-cost-display')]").Click();
             chromeDriver.Keyboard.SendKeys("1.99");
-            chromeDriver.FindElementByCssSelector("input.forminput.formsubmit").Click();
+            chromeDriver.Keyboard.SendKeys(Keys.Return);
             th.QuitDriver();
         }
 
         /// <summary>
-        ///  Tests the inserting and saving of the Stock column.
+        ///  Tests the inserting and saving of a whole row in the C-Store Inventory.
         /// </summary> 
         [TestMethod]
         public void InsertButton()
@@ -129,7 +133,22 @@ namespace BOSSMVC5.Tests
             RemoteWebDriver chromeDriver = th.GetChromeDriver();
 
             chromeDriver.FindElementByXPath("//a[contains(@id, 'insert-button')]").Click();
-
+            chromeDriver.FindElementByXPath("//tr/td/input[contains(@class, 'forminput')]").Click();
+            chromeDriver.Keyboard.SendKeys("200800");
+            chromeDriver.Keyboard.SendKeys(Keys.Tab);
+            chromeDriver.Keyboard.SendKeys(Keys.Return);
+            chromeDriver.Keyboard.SendKeys(Keys.Down);
+            chromeDriver.Keyboard.SendKeys(Keys.Return);
+            chromeDriver.Keyboard.SendKeys(Keys.Tab);
+            chromeDriver.Keyboard.SendKeys("Gatorade");
+            chromeDriver.Keyboard.SendKeys(Keys.Tab);
+            chromeDriver.Keyboard.SendKeys("100");
+            chromeDriver.Keyboard.SendKeys(Keys.Tab);
+            chromeDriver.Keyboard.SendKeys("1.00");
+            chromeDriver.Keyboard.SendKeys(Keys.Tab);
+            chromeDriver.Keyboard.SendKeys("2.00");
+            chromeDriver.Keyboard.SendKeys(Keys.Return);
+            th.QuitDriver();
         }
 
     }
