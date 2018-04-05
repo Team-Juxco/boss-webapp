@@ -70,6 +70,7 @@
     <Compile Include="StoreSalesTest.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="MainNavigationTest.cs" />
+    <Compile Include="FuelSalesTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
