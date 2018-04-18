@@ -64,7 +64,8 @@ namespace Tools
 
             // TODO: add logging here
         }
-        public void UpdateSales(string categoryName, string onDate, Decimal newValue)
+
+	public void UpdateSales(string categoryName, string onDate, Decimal newValue)
         {
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = sql;
@@ -75,6 +76,60 @@ namespace Tools
             cmd.ExecuteNonQuery();
 
         }
+
+	public void Insert(string tableName, Dictionary<string, string> values)
+        {
+            // wrap parameterized non-queries
+
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = sql;
+
+            // build up insert command string
+            string keyString = string.Join(", ", values.Select(x => x.Key).ToArray());
+            string valueString = string.Join(", ", values.Select(x => "@" + x.Key).ToArray());
+            string updateString = string.Join(", ", values.Select(x => x.Key + "=@" + x.Key));
+            cmd.CommandText = "INSERT INTO " + tableName + " (" + keyString + ") VALUES(" + valueString + ")";
+
+            cmd.Prepare();
+
+            // add parameters according to passed in values
+            foreach (var key in values.Keys)
+            {
+                cmd.Parameters.AddWithValue("@" + key, values[key]);
+            }
+
+            // execute
+            cmd.ExecuteNonQuery();
+
+            // TODO: add logging here
+        }
+
+        public void Update(string tableName, string keyName, string keyValue, Dictionary<string, string> values)
+        {
+            // wrap parameterized non-queries
+
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = sql;
+
+            // build up update command string
+            string keyString = string.Join(", ", values.Select(x => x.Key + " = @" + x.Key).ToArray());
+            cmd.CommandText = "UPDATE " + tableName + " " +
+                              "SET " + keyString + " " +
+                              "WHERE " + keyName + " = " + keyValue;
+            cmd.Prepare();
+
+            // add parameters according to passed in values
+            foreach (var key in values.Keys)
+            {
+                cmd.Parameters.AddWithValue("@" + key, values[key]);
+            }
+
+            // execute
+            cmd.ExecuteNonQuery();
+
+            // TODO: add logging here
+        }
+
         public void Dispose()
         {
             sql.Close();

@@ -163,15 +163,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuditReportController.cs" />
+    <Compile Include="Controllers\RestaurantInventoryController.cs" />
     <Compile Include="Controllers\FuelInventoryController.cs" />
     <Compile Include="Controllers\FuelSalesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CStoreInventoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\RestaruantPricesController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Models\AuditModels.cs" />
     <Compile Include="Models\InventoryModels.cs" />
-    <Compile Include="Models\RestaruantPricesModels.cs" />
     <Compile Include="Models\SaleModel.cs" />
     <Compile Include="Models\SalesModel.cs" />
     <Compile Include="Tools\DateHelper.cs" />
@@ -259,12 +259,14 @@
     <Content Include="Views\FuelSales\FuelSales.cshtml" />
     <Content Include="Views\FuelSales\FuelSalesMonth.cshtml" />
     <Content Include="Views\Sales\Sales.cshtml" />
-    <Content Include="Views\RestaurantPrices\RestaurantPrices.cshtml" />
+    <Content Include="Views\CStoreInventory\Index.cshtml" />
+    <Content Include="Views\CStoreInventory\Error.cshtml" />
+    <Content Include="Views\RestaurantInventory\Error.cshtml" />
+    <Content Include="Views\RestaurantInventory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="MVC5App\Models\" />
-    <Folder Include="Views\RestaruantPrices\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
