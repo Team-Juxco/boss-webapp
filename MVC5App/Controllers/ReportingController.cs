@@ -12,10 +12,25 @@ namespace MVC5App.Controllers
     {
         // GET: Reporting
         public ActionResult Index()
+        { 
+            return View();
+        }
+        public ActionResult FuelSalesReportMonth()
         {
             var sql = new Tools.OurSql();
             List<FuelSalesViewModel> data = new List<FuelSalesViewModel>();
-            var rdr = sql.Query("SELECT OnDate, Dollars " + "FROM FuelSales ") ;
+            var rdr = sql.Query("SELECT OnDate, Dollars " + "FROM FuelSales ");
+            while (rdr.Read())
+            {
+                data.Add(new FuelSalesViewModel { OnDate = rdr.GetDateTime(0), Dollars = rdr.GetDecimal(1) });
+            }
+            return View(data);
+        }
+        public ActionResult FuelSalesReportYear()
+        {
+            var sql = new Tools.OurSql();
+            List<FuelSalesViewModel> data = new List<FuelSalesViewModel>();
+            var rdr = sql.Query("SELECT OnDate, Dollars " + "FROM FuelSales ");
             while (rdr.Read())
             {
                 data.Add(new FuelSalesViewModel { OnDate = rdr.GetDateTime(0), Dollars = rdr.GetDecimal(1) });

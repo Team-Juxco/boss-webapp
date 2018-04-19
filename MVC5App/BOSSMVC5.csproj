@@ -270,6 +270,8 @@
     <Content Include="Views\RestaurantInventory\Error.cshtml" />
     <Content Include="Views\RestaurantInventory\Index.cshtml" />
     <Content Include="Views\Reporting\Index.cshtml" />
+    <Content Include="Views\Reporting\FuelSalesReportMonth.cshtml" />
+    <Content Include="Views\Reporting\FuelSalesReportYear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

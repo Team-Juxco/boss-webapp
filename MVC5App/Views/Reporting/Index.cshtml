@@ -1,47 +1,27 @@
-﻿@model IEnumerable<MVC5App.Models.FuelSalesViewModel>
+﻿
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Fuel Sales Report";
 }
 
-<h2>Reports</h2>
+<h1 class="col-md-9">Reports</h1>
 
 <p>
-
-    <div class="table-responsive top-margin">
-        <table class="table table-striped table-sm">
-            <tbody>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OnDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Dollars)
-                    </th>
-                    <th></th>
-                </tr>
-
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OnDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dollars)
-                        </td>
-                    </tr>
-                }
-
-            </tbody>
-        </table>
-    </div>
-    <div style="float:right">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                @Html.ActionLink("Export", "ExportToExcel")
-            </li>
-        </ul>
-    </div>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <div style="float:left">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    @Html.ActionLink("Fuel Sales Month", "FuelSalesReportMonth")
+                </li>
+            </ul>
+        </div>
+        <div style="float:right">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    @Html.ActionLink("Fuel Sales", "FuelSalesReportYear")
+                </li>
+            </ul>
+        </div>
+        </main>
 </p>
 
