@@ -140,7 +140,7 @@ function displayCategoryYearly() {
             for (var i in dataArr) {
 
                 //populate tbody
-                tbody += "<tr class='row-data'><td class='clickable' onclick='displayCategoryMonthly(" + dataArr[i].year + ")'>" + dataArr[i].year + "</td>" +
+                tbody += "<tr class='row-data'><td id= 'view-" + dataArr[i].year +"'class='clickable' onclick='displayCategoryMonthly(" + dataArr[i].year + ")'>" + dataArr[i].year + "</td>" +
                     "<td>" + dataArr[i].yearlyGross + "</td>" +
                     "<td>" + dataArr[i].yearlyNet + "</td></tr>";
             }

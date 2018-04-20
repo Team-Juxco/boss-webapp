@@ -163,6 +163,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuditReportController.cs" />
+    <Compile Include="Controllers\BusinessExpController.cs" />
     <Compile Include="Controllers\RestaurantInventoryController.cs" />
     <Compile Include="Controllers\FuelInventoryController.cs" />
     <Compile Include="Controllers\FuelSalesController.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Models\AuditModels.cs" />
+    <Compile Include="Models\BusinessExpModels.cs" />
     <Compile Include="Models\InventoryModels.cs" />
     <Compile Include="Models\SaleModel.cs" />
     <Compile Include="Models\SalesModel.cs" />
@@ -203,6 +205,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\boss.js" />
+    <Content Include="Scripts\businessexp.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -263,6 +266,7 @@
     <Content Include="Views\CStoreInventory\Error.cshtml" />
     <Content Include="Views\RestaurantInventory\Error.cshtml" />
     <Content Include="Views\RestaurantInventory\Index.cshtml" />
+    <Content Include="Views\BusinessExp\BusinessExp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -29,10 +29,10 @@
                             </li>
                             <li class="nav-item">
                                 @*
-                                    I would like to use the following:
-                                    @Html.ActionLink("Fuel Inventory", "FuelInventory", "Home", null, null)
-                                    However, clicking this link from the month view brings me back to the same month
-                                    instead of the fuel inventory dashboard.
+            I would like to use the following:
+            @Html.ActionLink("Fuel Inventory", "FuelInventory", "Home", null, null)
+            However, clicking this link from the month view brings me back to the same month
+            instead of the fuel inventory dashboard.
                                 *@
                                 <a href="@Url.Content("~/FuelInventory/A/")">Fuel Inventory</a>
                             </li>
@@ -41,12 +41,15 @@
                             </li>
                             <li class="nav-item">
                                 <a href="@Url.Content("~/Sales/Sales/")">Store Sales</a>
-			    </li>
-			    <li class="nav-item">
-                                 <a href="@Url.Content("~/CStoreInventory/Index/")">C-Store Inventory</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Content("~/CStoreInventory/Index/")">C-Store Inventory</a>
                             </li>
                             <li class="nav-item">
                                 <a href="@Url.Content("~/RestaurantInventory/Index/")">Restaurant Inventory</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Content("~/BusinessExp/BusinessExp/")">Business Expenses</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
