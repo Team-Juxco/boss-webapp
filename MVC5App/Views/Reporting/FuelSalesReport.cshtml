@@ -1,11 +1,26 @@
 ﻿@model IEnumerable<MVC5App.Models.FuelSalesViewModel>
 
 @{
-    ViewBag.Title = "FuelSalesReportMonth";
+    ViewBag.Title = "FuelSalesReport";
 }
 
-<h1 class="col-md-9">Fuel Sales</h1>
-
+<h2> Fuel Sales</h2>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div style="float:left">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                @Html.ActionLink("Back", "Index")
+            </li>
+        </ul>
+    </div>
+    <div style="float:right">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                @Html.ActionLink("Export", "ExportFuelSalesToExcel")
+            </li>
+        </ul>
+    </div>
+</main>
 <p>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <div class="table-responsive top-margin">
@@ -22,7 +37,7 @@
                     </tr>
 
                     @foreach (var item in Model)
-                     {
+                    {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.OnDate)
@@ -30,19 +45,12 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Dollars)
                             </td>
-                       </tr>
-                     }
+                        </tr>
+                    }
 
                 </tbody>
             </table>
         </div>
-        <div style="float:right">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    @Html.ActionLink("Export", "ExportToExcel")
-                </li>
-            </ul>
-        </div>
-        </main>
-</p>
 
+    </main>
+</p>

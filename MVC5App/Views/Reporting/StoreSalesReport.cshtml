@@ -1,0 +1,167 @@
+﻿@model IEnumerable<MVC5App.Models.SalesReportModel>
+
+@{
+    ViewBag.Title = "StoreSalesReport";
+}
+
+<h2>StoreSalesReport</h2>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div style="float:left">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                @Html.ActionLink("Back", "Index")
+            </li>
+        </ul>
+    </div>
+    <div style="float:right">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                @Html.ActionLink("Export", "ExportStoreSalesToExcel")
+            </li>
+        </ul>
+    </div>
+</main>
+<p>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <div class="table-responsive top-margin">
+            <table class="table table-striped table-sm">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OnDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FountainNet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FountainGross)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BeerWineNet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BeerWineGross)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SuppliesNet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SuppliesGross)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CigPackNet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CigPackGross)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CigCartonNet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CigCartonGross)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LottoNet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LotoGross)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PropaneNet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PropaneGross)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PackBeverageNet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PackBeverageGross)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CofeeNet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CofeeGross)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PhoneCardNet)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PhoneCardGross)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OnDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FountainNet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FountainGross)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BeerWineNet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BeerWineGross)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SuppliesNet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SuppliesGross)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CigPackNet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CigPackGross)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CigCartonNet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CigCartonGross)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LottoNet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LotoGross)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PropaneNet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PropaneGross)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PackBeverageNet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PackBeverageGross)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CofeeNet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CofeeGross)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneCardNet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneCardGross)
+                    </td>
+                </tr>
+        }
+
+            </table>
+            </div>
+    </main>
+</p>

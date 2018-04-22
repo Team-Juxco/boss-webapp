@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MVC5App.Models.CStoreInventoryReportModel>
+
+@{
+    ViewBag.Title = "CStoreInventoryReport";
+}
+
+<h2>CStoreInventoryReport</h2>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div style="float:left">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                @Html.ActionLink("Back", "Index")
+            </li>
+        </ul>
+    </div>
+    <div style="float:right">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                @Html.ActionLink("Export", "ExportCstoreSalesToExcel")
+            </li>
+        </ul>
+    </div>
+</main>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div class="table-responsive top-margin">
+        <table class="table table-striped table-sm">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stock)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SalePrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListPrice)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalePrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ListPrice)
+                </td>
+            </tr>
+            }
+
+        </table>
+        </div>
+</main>

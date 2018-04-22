@@ -177,6 +177,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Models\AuditModels.cs" />
+    <Compile Include="Models\SalesReportModel.cs" />
     <Compile Include="Models\InventoryModels.cs" />
     <Compile Include="Models\SaleModel.cs" />
     <Compile Include="Models\SalesModel.cs" />
@@ -270,8 +271,11 @@
     <Content Include="Views\RestaurantInventory\Error.cshtml" />
     <Content Include="Views\RestaurantInventory\Index.cshtml" />
     <Content Include="Views\Reporting\Index.cshtml" />
-    <Content Include="Views\Reporting\FuelSalesReportMonth.cshtml" />
-    <Content Include="Views\Reporting\FuelSalesReportYear.cshtml" />
+    <Content Include="Views\Reporting\FuelSalesReport.cshtml" />
+    <Content Include="Views\Reporting\FuelInventoryReport.cshtml" />
+    <Content Include="Views\Reporting\StoreSalesReport.cshtml" />
+    <Content Include="Views\Reporting\CStoreInventoryReport.cshtml" />
+    <Content Include="Views\Reporting\RestaurantInventoryReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
