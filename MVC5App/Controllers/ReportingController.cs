@@ -15,6 +15,18 @@ namespace MVC5App.Controllers
         { 
             return View();
         }
+        public ActionResult BusinessExpensesReport()
+        {
+            var sql = new Tools.OurSql();
+            List<BusinessExpViewModel> data = new List<BusinessExpViewModel>();
+            var rdr = sql.Query("SELECT *" + "FROM BusinessExpenses");
+            while (rdr.Read())
+            {
+                data.Add(new BusinessExpViewModel { InvoiceNum = rdr.GetInt32(0), VendorId= rdr.GetInt32(1), OnDate = rdr.GetString(2),
+                    DueDate = rdr.GetString(3), AccountNum = rdr.GetInt32(4),Amount = rdr.GetInt32(5) });
+            }
+            return View(data);
+        }
         public ActionResult RestaurantInventoryReport()
         {
             var sql = new Tools.OurSql();
@@ -338,6 +350,50 @@ namespace MVC5App.Controllers
                 ws.Cells[String.Format("C{0}", rowstart)].Value = item.Cost;
                 ws.Cells[String.Format("D{0}", rowstart)].Value = item.SoldFor;
                 ws.Cells[String.Format("E{0}", rowstart)].Value = item.AmountSold;
+                rowstart++;
+
+            }
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "ExcelReport.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+        }
+        public void ExportBusinessExpensesToExcel()
+        {
+            var sql = new Tools.OurSql();
+            List<BusinessExpViewModel> data = new List<BusinessExpViewModel>();
+            var rdr = sql.Query("SELECT *" + "FROM BusinessExpenses");
+            while (rdr.Read())
+            {
+                data.Add(new BusinessExpViewModel
+                {
+                    InvoiceNum = rdr.GetInt32(0),
+                    VendorId = rdr.GetInt32(1),
+                    OnDate = rdr.GetString(2),
+                    DueDate = rdr.GetString(3),
+                    AccountNum = rdr.GetInt32(4),
+                    Amount = rdr.GetInt32(5)
+                });
+            }
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+            ws.Cells["A1"].Value = "InvoiceNum";
+            ws.Cells["B1"].Value = "VendorID";
+            ws.Cells["C1"].Value = "OnDate";
+            ws.Cells["D1"].Value = "DueDate";
+            ws.Cells["E1"].Value = "AccountNum";
+            ws.Cells["F1"].Value = "Amount";
+            int rowstart = 2;
+            foreach (var item in data)
+            {
+                ws.Cells[String.Format("A{0}", rowstart)].Value = item.InvoiceNum;
+                ws.Cells[String.Format("B{0}", rowstart)].Value = item.VendorId;
+                ws.Cells[String.Format("C{0}", rowstart)].Value = item.OnDate;
+                ws.Cells[String.Format("D{0}", rowstart)].Value = item.DueDate;
+                ws.Cells[String.Format("E{0}", rowstart)].Value = item.AccountNum;
+                ws.Cells[String.Format("F{0}", rowstart)].Value = item.Amount;
                 rowstart++;
 
             }

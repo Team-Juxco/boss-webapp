@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MVC5App.Models.BusinessExpViewModel>
+
+@{
+    ViewBag.Title = "BusinessExpensesReport";
+}
+
+<h2>BusinessExpensesReport</h2>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div style="float:left">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                @Html.ActionLink("Back", "Index")
+            </li>
+        </ul>
+    </div>
+    <div style="float:right">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                @Html.ActionLink("Export", "ExportBusinessExpensesToExcel")
+            </li>
+        </ul>
+    </div>
+</main>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div class="table-responsive top-margin">
+        <table class="table table-striped table-sm">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.InvoiceNum)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VendorId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OnDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DueDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccountNum)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InvoiceNum)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VendorId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OnDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DueDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountNum)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+    </main>
