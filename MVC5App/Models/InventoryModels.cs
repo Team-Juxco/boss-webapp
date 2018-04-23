@@ -49,7 +49,28 @@ namespace MVC5App.Models
         [Required]
         public Decimal ListPrice {  get;  set; }
     }
+    public class CStoreInventoryReportModel
+    {
+        [Required]
+        public int Id { get; set; }
 
+        [Required]
+        public string Category { get; set; }
+
+        [Required]
+        [MaxLength(45, ErrorMessage = "Description cannot be longer than 45 characters.")]
+        [DataType(DataType.Text)]
+        public string Description { get; set; }
+
+        [Required]
+        public int Stock { get; set; }
+
+        [Required]
+        public Decimal SalePrice { get; set; }
+
+        [Required]
+        public Decimal ListPrice { get; set; }
+    }
     public class CStoreInventoryChangeViewModel
     {
         [Required]

@@ -1,0 +1,25 @@
+﻿
+
+@{
+    ViewBag.Title = "Fuel Sales Report";
+}
+
+<h1 class="col-md-9">Reports</h1>
+
+<p>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <div style="float:left">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    @Html.ActionLink("Fuel Sales Report", "FuelSalesReport")
+                    @Html.ActionLink("Fuel Inventory Report", "FuelInventoryReport")
+                    @Html.ActionLink("Store Sales Report", "StoreSalesReport")
+                    @Html.ActionLink("CStore Report", "CStoreInventoryReport")
+                    @Html.ActionLink("Restaurant Inventory Report", "RestaurantInventoryReport")
+
+                </li>
+            </ul>
+        </div>
+        </main>
+</p>
+
