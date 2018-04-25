@@ -36,7 +36,7 @@ namespace BOSSMVC5.Tests
             int n = th.randomInt(1, 12);
 
             chromeDriver.FindElementByXPath("//select[@id='sales-daily-month-select']/option[@value='" + n + "']").Click();
-            //th.QuitDriver();
+            th.QuitDriver();
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace BOSSMVC5.Tests
             int n = th.randomInt(1, 12);
 
             chromeDriver.FindElementByXPath("//select[@id='sales-daily-year-select']/option[contains(@value, '20')]").Click();
-            //th.QuitDriver();
+            th.QuitDriver();
         }
 
 

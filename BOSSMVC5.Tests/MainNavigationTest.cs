@@ -37,6 +37,18 @@ namespace BOSSMVC5.Tests
             chromeDriver.FindElementByLinkText("C-Store Inventory").Click();
             chromeDriver.FindElementByLinkText("Dashboard").Click();
 
+            // Restaurant Inventory -> Dashboard
+            chromeDriver.FindElementByLinkText("Restaurant Inventory").Click();
+            chromeDriver.FindElementByLinkText("Dashboard").Click();
+
+            // Business Expenses -> Dashboard
+            chromeDriver.FindElementByLinkText("Business Expenses").Click();
+            chromeDriver.FindElementByLinkText("Dashboard").Click();
+
+            // Reports -> Dashboard
+            chromeDriver.FindElementByLinkText("Reports").Click();
+            chromeDriver.FindElementByLinkText("Dashboard").Click();
+
 
 
             th.QuitDriver();
