@@ -11,9 +11,7 @@ namespace BOSSMVC5.Tests
 	[TestClass]
 	public class FuelSalesTest
 	{
-		/// <summary>
-		/// Front end functionality tests -------------------------------------------------------------------------
-		/// </summary>
+		
 
 		/// <summary>
 		/// Tests the Editing of Recent Table Input
