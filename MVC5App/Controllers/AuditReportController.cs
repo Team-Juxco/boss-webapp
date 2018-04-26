@@ -10,8 +10,9 @@ namespace MVC5App.Controllers
     public class AuditReportController : Controller
     {
 
+     
         // GET: AuditReport - Specific table to queried 
-        [Route("AuditReport/index/{table}")]
+        [Route("Reporting/AuditReport/{table}")]
         public ActionResult Index(string table)
         {
             ViewData["table"] = table;
@@ -19,7 +20,7 @@ namespace MVC5App.Controllers
         }
 
         // GET: AuditReport - All tables
-        [Route("AuditReport/index/")]
+        [Route("Reporting/AuditReport/")]
         public ActionResult Index()
         {
             return View("AuditReport");
